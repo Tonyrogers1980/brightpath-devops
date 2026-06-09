@@ -148,7 +148,7 @@
   .main { position: relative; z-index: 1; padding: 28px 32px; max-width: 1600px; margin: 0 auto; }
 
   /* Stats */
-  .stats { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 28px; }
+  .stats { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin-bottom: 28px; }
 
   .stat {
     background: var(--surface); border: 1px solid var(--border);
@@ -162,6 +162,7 @@
   .stat.s-assigned .stat-val { color: #a78bfa; }
   .stat.s-inprogress .stat-val { color: var(--accent4); }
   .stat.s-blocked .stat-val { color: var(--accent2); }
+  .stat.s-pending .stat-val { color: #38bdf8; }
   .stat.s-done .stat-val { color: var(--accent3); }
 
   /* Toolbar */
@@ -223,6 +224,7 @@
   .sp-assigned_to_you { background: rgba(167,139,250,0.18); color: #a78bfa; }
   .sp-in_progress { background: rgba(247,151,30,0.18); color: var(--accent4); }
   .sp-blocked { background: rgba(255,107,107,0.18); color: var(--accent2); }
+  .sp-pending_testing { background: rgba(56,189,248,0.15); color: #38bdf8; }
   .sp-done { background: rgba(67,233,123,0.13); color: var(--accent3); }
   .sp-backlog { background: rgba(42,42,58,0.5); color: #555570; }
 
@@ -388,6 +390,7 @@
     <div class="stat s-assigned" onclick="fStatus('assigned_to_you')" id="st-assigned_to_you"><div class="stat-label">Assigned</div><div class="stat-val" id="c-assigned_to_you">—</div></div>
     <div class="stat s-inprogress" onclick="fStatus('in_progress')" id="st-in_progress"><div class="stat-label">In Progress</div><div class="stat-val" id="c-in_progress">—</div></div>
     <div class="stat s-blocked" onclick="fStatus('blocked')" id="st-blocked"><div class="stat-label">Blocked</div><div class="stat-val" id="c-blocked">—</div></div>
+    <div class="stat s-pending" onclick="fStatus('pending_testing')" id="st-pending_testing"><div class="stat-label">Testing</div><div class="stat-val" id="c-pending_testing">—</div></div>
     <div class="stat s-done" onclick="fStatus('done')" id="st-done"><div class="stat-label">Done</div><div class="stat-val" id="c-done">—</div></div>
   </div>
 
@@ -504,7 +507,7 @@
 
   function updateStats() {
     document.getElementById('c-all').textContent = items.length;
-    ['new','screening','assigned_to_you','in_progress','blocked','done','backlog'].forEach(s => {
+    ['new','screening','assigned_to_you','in_progress','blocked','pending_testing','done','backlog'].forEach(s => {
       const el = document.getElementById(`c-${s}`);
       if (el) el.textContent = items.filter(i => i.status === s).length;
     });
@@ -628,7 +631,7 @@
       <div class="section">
         <div class="section-title">Status</div>
         <select id="pStatus" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:10px">
-          ${['new','screening','assigned_to_you','in_progress','blocked','done','backlog'].map(s =>
+          ${['new','screening','assigned_to_you','in_progress','blocked','pending_testing','done','backlog'].map(s =>
             `<option value="${s}" ${r.status===s?'selected':''}>${s.replace(/_/g,' ')}</option>`
           ).join('')}
         </select>
