@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrightPath — Learning Support Built for Your Child</title>
+<meta name="description" content="Personalised AI learning support for children who need a little extra help. Built by a dad, inspired by his son. Aligned to the UK National Curriculum.">
+<meta property="og:title" content="BrightPath — Extra Practice for Kids">
+<meta property="og:description" content="AI lessons personalised to your child's year group. Automatically marked. Read-aloud support. Perfect for 2-3 sessions a week alongside school.">
+<meta property="og:url" content="https://thebrightpath.uk">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f0e17;--surface:#1a1825;--surface2:#231f35;--border:rgba(255,255,255,0.08);--text:#fffffe;--muted:rgba(255,255,255,0.6);--accent:#7c6af7;--accent2:#f7596a;--success:#69f0ae;--radius:16px;--radius-sm:10px}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Nunito',sans-serif}
+a{color:var(--accent);text-decoration:none}
+.container{max-width:740px;margin:0 auto;padding:0 20px}
+
+/* NAV */
+nav{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;max-width:740px;margin:0 auto;position:sticky;top:0;z-index:100;background:rgba(15,14,23,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.logo{font-family:Nunito,sans-serif;font-weight:900;font-size:20px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;align-items:center;gap:16px}
+.nav-link{font-size:14px;color:var(--muted);font-weight:600;transition:color 0.15s}
+.nav-link:hover{color:var(--text)}
+.nav-btn{background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:10px 20px;font-family:Nunito,sans-serif;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;transition:all 0.15s}
+.nav-btn:hover{filter:brightness(1.1)}
+.nav-login{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-sm);padding:10px 20px;font-family:Nunito,sans-serif;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;transition:all 0.15s}
+.nav-login:hover{border-color:var(--accent);color:var(--accent)}
+
+/* HERO */
+.hero{padding:72px 20px 52px;text-align:center;max-width:740px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,106,247,0.12);border:1px solid rgba(124,106,247,0.25);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:24px}
+.hero h1{font-size:clamp(36px,6vw,56px);font-weight:900;line-height:1.1;margin-bottom:18px;letter-spacing:-0.5px}
+.grad{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:18px;color:var(--muted);max-width:500px;margin:0 auto 32px;line-height:1.75}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.btn-cta{background:linear-gradient(135deg,var(--accent),#9c5cf7);color:#fff;border:none;border-radius:var(--radius-sm);padding:16px 32px;font-family:Nunito,sans-serif;font-weight:800;font-size:16px;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.15s;box-shadow:0 4px 24px rgba(124,106,247,0.35)}
+.btn-cta:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.18);border-radius:var(--radius-sm);padding:16px 28px;font-family:Nunito,sans-serif;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.15s}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.hero-note{font-size:13px;color:rgba(255,255,255,0.3)}
+.hero-note span{margin:0 8px}
+
+/* TRUST BAR */
+.trust{display:flex;justify-content:center;align-items:center;gap:24px;padding:18px 20px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:0 20px;flex-wrap:wrap}
+.trust-item{font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px}
+
+/* SECTIONS */
+.section{padding:64px 20px;max-width:740px;margin:0 auto}
+.section-tag{font-size:12px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px}
+.section h2{font-size:clamp(26px,4vw,38px);font-weight:900;margin-bottom:10px;letter-spacing:-0.3px}
+.section-sub{font-size:16px;color:var(--muted);margin-bottom:36px;max-width:520px;line-height:1.7}
+
+/* HOW IT WORKS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:all 0.2s}
+.step:hover{border-color:rgba(124,106,247,0.4);transform:translateY(-2px)}
+.step-num{width:36px;height:36px;border-radius:50%;background:rgba(124,106,247,0.15);border:1px solid rgba(124,106,247,0.3);display:flex;align-items:center;justify-content:center;font-family:Nunito,sans-serif;font-weight:900;color:var(--accent);font-size:15px;margin-bottom:14px}
+.step h3{font-family:Nunito,sans-serif;font-size:15px;font-weight:800;margin-bottom:8px}
+.step p{font-size:13px;color:var(--muted);line-height:1.65}
+
+/* USE CASES */
+.usecases{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.uc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all 0.2s}
+.uc:hover{border-color:rgba(124,106,247,0.3)}
+.uc-icon{font-size:28px;margin-bottom:10px;display:block}
+.uc h3{font-family:Nunito,sans-serif;font-size:15px;font-weight:800;margin-bottom:6px}
+.uc p{font-size:13px;color:var(--muted);line-height:1.65}
+
+/* SUBJECTS */
+.subjects{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:24px 0}
+.subj{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 10px;text-align:center;transition:all 0.2s}
+.subj:hover{border-color:rgba(124,106,247,0.4);transform:translateY(-2px)}
+.subj-e{font-size:28px;display:block;margin-bottom:6px}
+.subj-n{font-family:Nunito,sans-serif;font-size:13px;font-weight:800}
+.subj-k{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* PROFESSOR HOOT */
+.professor{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;display:flex;gap:24px;align-items:flex-start;margin-top:24px}
+.prof-emoji{font-size:60px;flex-shrink:0;line-height:1}
+.prof-content h3{font-family:Nunito,sans-serif;font-size:22px;font-weight:900;margin-bottom:8px}
+.prof-content p{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:14px}
+.feedback-example{background:var(--surface2);border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.7;border-left:3px solid var(--accent)}
+.feedback-q{font-size:12px;color:var(--muted);margin-bottom:6px;font-style:italic}
+
+/* FEATURES GRID */
+.features{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;gap:14px;transition:all 0.2s}
+.feat:hover{border-color:rgba(124,106,247,0.3)}
+.feat-icon{font-size:26px;flex-shrink:0;line-height:1.2}
+.feat h3{font-family:Nunito,sans-serif;font-size:14px;font-weight:800;margin-bottom:5px}
+.feat p{font-size:13px;color:var(--muted);line-height:1.65}
+.feat-new{display:inline-block;font-size:10px;font-weight:800;background:rgba(105,240,174,0.15);color:var(--success);border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+
+/* SOCIAL PROOF */
+
+
+/* PRICING */
+.pricing{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+.price-card.featured{border-color:rgba(124,106,247,0.5);position:relative;background:rgba(124,106,247,0.05)}
+.feat-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;border-radius:20px;padding:4px 16px;font-size:12px;font-weight:800;white-space:nowrap}
+.price-name{font-family:Nunito,sans-serif;font-size:17px;font-weight:900;margin-bottom:4px}
+.price-desc{font-size:13px;color:var(--muted);margin-bottom:14px}
+.price-amount{font-family:Nunito,sans-serif;font-size:42px;font-weight:900;line-height:1}
+.price-amount sup{font-size:20px;vertical-align:super}
+.price-amount span{font-size:15px;color:var(--muted);font-weight:400}
+.price-trial{font-size:13px;color:var(--success);margin:10px 0 16px;font-weight:600}
+.price-compare{font-size:12px;color:var(--muted);margin-bottom:16px;font-style:italic}
+.price-features{list-style:none;margin-bottom:22px}
+.price-features li{font-size:13px;color:var(--muted);padding:6px 0;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid var(--border)}
+.price-features li:last-child{border:none}
+.price-features li::before{content:'✓';color:var(--success);font-weight:800;flex-shrink:0;margin-top:1px}
+.btn-price{display:block;text-align:center;padding:14px;border-radius:var(--radius-sm);font-family:Nunito,sans-serif;font-weight:800;font-size:15px;text-decoration:none;transition:all 0.15s}
+.btn-price-primary{background:var(--accent);color:#fff}
+.btn-price-primary:hover{filter:brightness(1.08)}
+.btn-price-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-price-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+/* FAQ */
+.faq-wrap{margin-top:24px}
+.faq{border-bottom:1px solid var(--border)}
+.faq-q{padding:16px 0;display:flex;justify-content:space-between;align-items:center;font-family:Nunito,sans-serif;font-weight:700;font-size:15px;gap:12px;cursor:pointer;user-select:none}
+.faq-q::after{content:'+';font-size:22px;color:var(--muted);flex-shrink:0;transition:transform 0.2s;line-height:1}
+.faq.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{font-size:14px;color:var(--muted);line-height:1.8;padding-bottom:16px;display:none}
+.faq.open .faq-a{display:block}
+
+/* CTA */
+.cta-section{padding:80px 20px;text-align:center;max-width:740px;margin:0 auto}
+.cta-section h2{font-size:clamp(28px,5vw,46px);font-weight:900;margin-bottom:14px;line-height:1.15;letter-spacing:-0.3px}
+.cta-section p{font-size:16px;color:var(--muted);margin-bottom:32px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.7}
+.cta-features{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:0 0 28px}
+.cta-feat{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.cta-feat::before{content:'✓';color:var(--success);font-weight:800}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:28px 20px;max-width:740px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer p{font-size:12px;color:rgba(255,255,255,0.3)}
+.footer-links{display:flex;gap:16px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,0.3);transition:color 0.15s}
+.footer-links a:hover{color:var(--muted)}
+
+@media(max-width:540px){
+  .steps{grid-template-columns:1fr}
+  .usecases{grid-template-columns:1fr}
+  .subjects{grid-template-columns:repeat(3,1fr)}
+  .features{grid-template-columns:1fr}
+
+  .pricing{grid-template-columns:1fr}
+  .hero-btns{flex-direction:column;align-items:center}
+  .trust{gap:12px}
+  footer{flex-direction:column;text-align:center}
+  .professor{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">✨ BrightPath</div>
+  <div class="nav-links">
+    <a href="#story" class="nav-link">Our story</a>
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="app.html" class="nav-login">Log in</a>
+    <a href="app.html" class="nav-btn">Start free trial</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🇬🇧 Aligned to the UK National Curriculum</div>
+  <h1>Your child is <span class="grad">brighter</span><br>than their results show.</h1>
+  <p class="hero-sub">BrightPath gives every child personalised learning support that goes at their pace — not the classroom's. Whether they're in school and need extra help, or you homeschool full time.</p>
+  <div class="hero-btns">
+    <a href="app.html" class="btn-cta">Start free — no card needed →</a>
+    <a href="#how" class="btn-outline">See how it works</a>
+  </div>
+  <p class="hero-note"><span style="color:var(--success)">No card required</span><span>·</span><span>7-day free trial</span><span>·</span><span>Cancel anytime</span></p>
+</div>
+
+<div class="trust">
+  <div class="trust-item">🇬🇧 UK National Curriculum</div>
+  <div class="trust-item">🔒 GDPR Compliant</div>
+  <div class="trust-item">✅ Zero ads, ever</div>
+  <div class="trust-item">🎧 Read-aloud support</div>
+  <div class="trust-item">🧒 Ages 5–16</div>
+</div>
+
+<!-- FOUNDER STORY -->
+<div class="section" id="story" style="background:rgba(124,106,247,0.04);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding:64px 20px">
+  <div style="max-width:680px;margin:0 auto">
+    <div class="section-tag">Why BrightPath exists</div>
+    <h2 style="margin-bottom:20px">Built by a dad.<br><span class="grad">Inspired by an extraordinary boy.</span></h2>
+    <p style="font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:16px">My son Rory is 10. He's autistic, fiercely bright, and one of the most articulate people I've ever met. He has a vocabulary that stops adults mid-conversation, a strong sense of justice, and opinions on absolutely everything — delivered with complete confidence.</p>
+    <p style="font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:16px">His teachers have always said the same thing: Rory is incredibly clever, but he needs to slow down. Read the question. Check the detail. Get what's in his head onto the page.</p>
+    <p style="font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:16px">But Rory isn't unique in that. When I talked to other parents, I kept hearing it. <em>She's bright but losing confidence. He understands it but can't show it. She just needs someone to go at her pace.</em></p>
+    <p style="font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:24px">So when Rory and I had two weeks at home together, I asked him what he actually needed. He told me — clearly, in that very Rory way. And then we built it together, at the kitchen table.</p>
+    <div style="display:flex;align-items:center;gap:14px">
+      <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:Nunito,sans-serif;font-weight:900;font-size:18px;color:#fff;flex-shrink:0">T</div>
+      <div>
+        <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px">Tony, founder of BrightPath</div>
+        <div style="font-size:13px;color:var(--muted)">Dad. Built this for Rory.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div class="section">
+  <div class="section-tag">Why BrightPath</div>
+  <h2>"He's bright, but he just needs to slow down."</h2>
+  <p class="section-sub">Sound familiar? Every day, parents hear this from teachers. The ability is there — but something isn't clicking. The classroom moves too fast, support is stretched, and private tutors cost £30–50 an hour. BrightPath was built to change that.</p>
+  <div style="background:rgba(124,106,247,0.08);border:1px solid rgba(124,106,247,0.2);border-radius:var(--radius);padding:22px 24px;margin:24px 0">
+    <p style="font-size:15px;color:var(--text);line-height:1.8;margin:0">BrightPath generates a fresh, personalised practice session in under 20 seconds — pitched exactly at your child's key stage, automatically marked with feedback from Professor Hoot, and different every single time.</p>
+  </div>
+  <div class="usecases" id="how">
+    <div class="uc"><span class="uc-icon">📉</span><h3>Catch-up support</h3><p>Your child fell behind in maths or missed some English topics. BrightPath generates targeted practice at exactly their level with feedback explaining what went wrong and how to improve.</p></div>
+    <div class="uc"><span class="uc-icon">🚀</span><h3>Extension work</h3><p>Your child is ahead and needs more challenge. BrightPath generates harder questions and deeper content to keep them stretched and thinking.</p></div>
+    <div class="uc"><span class="uc-icon">📝</span><h3>Exam preparation</h3><p>SATs, 11+, GCSEs — BrightPath generates practice questions at the right level, marks them instantly, and tells your child exactly what to improve.</p></div>
+    <div class="uc"><span class="uc-icon">🎧</span><h3>Every kind of learner</h3><p>Every lesson has a built-in read-aloud button. Professor Hoot can read the full lesson text aloud at adjustable speeds — perfect for dyslexia, ADHD, or any child who finds reading difficult.</p></div>
+  </div>
+</div>
+
+
+
+<!-- HOW IT WORKS -->
+<div class="section" style="padding-top:0">
+  <div class="section-tag">How it works</div>
+  <h2>A complete session in 3 steps</h2>
+  <p class="section-sub">No prep, no printing, no marking. BrightPath handles everything.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Pick a subject</h3>
+      <p>Choose from Maths, English, Science, History, or Geography. BrightPath knows your child's exact year group and key stage.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Generate a lesson</h3>
+      <p>A fresh, personalised lesson appears in under 20 seconds — with reading content, a curated educational video, and exam-style questions. Hit the 🔊 button for read-aloud support.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Get marked instantly</h3>
+      <p>Answers are marked by Professor Hoot with per-question feedback, partial marks, and specific suggestions. Redo the lesson to improve the score.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PROFESSOR HOOT -->
+<div class="section" style="padding-top:0">
+  <div class="professor">
+    <div class="prof-emoji">🦉</div>
+    <div class="prof-content">
+      <h3>Meet Professor Hoot</h3>
+      <p>Every lesson is taught and marked by Professor Hoot — BrightPath's AI tutor. Not generic AI feedback, but specific, encouraging comments on each answer that tell your child exactly what they got right and how to improve. Parents get a weekly summary of Professor Hoot's feedback so they always know how their child is progressing.</p>
+      <div class="feedback-q">Professor Hoot marking a Year 8 Science answer:</div>
+      <div class="feedback-example">"Well done — you correctly identified that photosynthesis requires sunlight and carbon dioxide. For full marks next time, also mention that chlorophyll in the leaves absorbs the light energy. You are almost there — a really strong answer!"</div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBJECTS -->
+<div class="section" style="padding-top:0">
+  <div class="section-tag">Subjects</div>
+  <h2>5 subjects, KS1 to KS4</h2>
+  <p class="section-sub">Every lesson is freshly generated and tailored to your child's exact year group and key stage. Two lessons per subject per day.</p>
+  <div class="subjects">
+    <div class="subj"><span class="subj-e">🔢</span><div class="subj-n">Maths</div><div class="subj-k">KS1–KS4</div></div>
+    <div class="subj"><span class="subj-e">📖</span><div class="subj-n">English</div><div class="subj-k">KS1–KS4</div></div>
+    <div class="subj"><span class="subj-e">🔬</span><div class="subj-n">Science</div><div class="subj-k">KS1–KS4</div></div>
+    <div class="subj"><span class="subj-e">🏛️</span><div class="subj-n">History</div><div class="subj-k">KS1–KS4</div></div>
+    <div class="subj"><span class="subj-e">🌍</span><div class="subj-n">Geography</div><div class="subj-k">KS1–KS4</div></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section" style="padding-top:0" id="features">
+  <div class="section-tag">Features</div>
+  <h2>Everything that makes kids come back</h2>
+  <p class="section-sub">BrightPath combines curriculum-aligned content with the motivation mechanics that actually work — and accessibility features that make it work for every child.</p>
+  <div class="features">
+    <div class="feat"><div class="feat-icon">🎧</div><div><h3>Read-aloud support</h3><p>Every lesson has a built-in read-aloud button. Professor Hoot reads the full lesson text aloud at adjustable speeds. Essential for dyslexia, ADHD, or any child who finds reading difficult.</p></div></div>
+    <div class="feat"><div class="feat-icon">🦉</div><div><h3>Professor Hoot feedback</h3><p>Specific, encouraging feedback on every answer — not just a tick or cross. Tells your child exactly what was right and what to improve, question by question.</p></div></div>
+    <div class="feat"><div class="feat-icon">🔄</div><div><h3>Redo to improve</h3><p>Every marked lesson can be redone with prior answers pre-filled. Children read the feedback, edit the weak parts, and resubmit for a better score. Learning from mistakes, not just testing.</p></div></div>
+    <div class="feat"><div class="feat-icon">🔥</div><div><h3>Daily challenges</h3><p>A bonus question every day worth double XP. Builds the habit of daily learning through a specific reason to open the app — today only.</p></div></div>
+    <div class="feat"><div class="feat-icon">⭐</div><div><h3>XP, ranks and badges</h3><p>Kids earn XP on every lesson, climb a rank ladder from Learner to Genius, and unlock named achievement badges as they progress. Motivation that lasts.</p></div></div>
+    <div class="feat"><div class="feat-icon">📊</div><div><h3>Weekly parent report</h3><p>Every Sunday, you receive a detailed email — lessons completed, scores, Professor Hoot's feedback summary, and day streak. Always know how your child is doing.</p></div></div>
+    <div class="feat"><div class="feat-icon">📺</div><div><h3>Curated educational videos</h3><p>Every lesson includes a relevant video from trusted UK channels like Oak National Academy and BBC Teach — matched to the exact topic and key stage.</p></div></div>
+    <div class="feat"><div class="feat-icon">👨‍👩‍👧</div><div><h3>Family plan</h3><p>Up to 4 children on one account, each with their own personalised profile, progress tracker, XP, badges, and lessons pitched at their exact level.</p></div></div>
+    <div class="feat"><div class="feat-icon">💾</div><div><h3>Autosave answers</h3><p>Answers save automatically as your child types. If they navigate away or the browser refreshes, their work is instantly restored. Nothing is ever lost.</p></div></div>
+    <div class="feat"><div class="feat-icon">🔒</div><div><h3>Safe and private</h3><p>No ads. No data selling. Children identified by first name only. Fully GDPR compliant. Your child's data is only ever visible to your account.</p></div></div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+
+
+<!-- PRICING -->
+<div class="section" id="pricing" style="padding-top:0">
+  <div class="section-tag">Pricing</div>
+  <h2>Simple, honest pricing</h2>
+  <p class="section-sub">Same features. Same Professor Hoot. Same unlimited lessons. The only difference is how many children are covered.</p>
+  <div class="pricing">
+    <div class="price-card">
+      <div class="price-name">Single child</div>
+      <div class="price-desc">Everything BrightPath offers, for one child</div>
+      <div class="price-amount"><sup>£</sup>9.99<span>/month</span></div>
+      <div style="font-size:13px;color:var(--accent);margin-bottom:4px;font-weight:600">or £89/year — save over 25%</div>
+      <div class="price-trial">✓ 7-day free trial — no card needed</div>
+      <div class="price-compare">Less than one tutoring session — with lessons every single day</div>
+      <ul class="price-features">
+        <li>1 child profile</li>
+        <li>All 5 subjects, KS1–KS4</li>
+        <li>Unlimited daily lessons</li>
+        <li>AI marking and feedback</li>
+        <li>Read-aloud support</li>
+        <li>XP, badges and daily challenges</li>
+        <li>Weekly parent progress report</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="app.html" class="btn-price btn-price-outline">Start free trial →</a>
+    </div>
+    <div class="price-card featured">
+      <div class="feat-badge">Most popular</div>
+      <div class="price-name">Family</div>
+      <div class="price-desc">Everything BrightPath offers, for up to 4 children</div>
+      <div class="price-amount"><sup>£</sup>14.99<span>/month</span></div>
+      <div style="font-size:13px;color:var(--accent);margin-bottom:4px;font-weight:600">or £129/year — save over 28%</div>
+      <div class="price-trial">✓ 7-day free trial — no card needed</div>
+      <div class="price-compare">Less than £4 per child per month — every subject, every day</div>
+      <ul class="price-features">
+        <li>Up to 4 child profiles — each personalised</li>
+        <li>All 5 subjects, KS1–KS4 per child</li>
+        <li>Unlimited daily lessons for every child</li>
+        <li>AI marking and feedback for every child</li>
+        <li>Read-aloud support</li>
+        <li>XP, badges and daily challenges per child</li>
+        <li>Weekly parent report covering all children</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="app.html" class="btn-price btn-price-primary">Start free trial →</a>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);text-align:center;margin-top:16px">Secure payment via Stripe · No contracts · Cancel anytime</p>
+  <p style="font-size:13px;color:var(--muted);text-align:center;margin-top:8px">Got two children? The family plan works out at <strong style="color:var(--text)">£7.50 each</strong>. Three children? <strong style="color:var(--text)">£5 each</strong>. Same features, just more covered.</p>
+</div>
+
+<!-- FAQ -->
+<div class="section" style="padding-top:0">
+  <div class="section-tag">FAQ</div>
+  <h2>Common questions</h2>
+  <div class="faq-wrap">
+    <div class="faq" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Is BrightPath aligned to the UK curriculum?</div>
+      <div class="faq-a">Yes. Every lesson is generated specifically for the UK National Curriculum at the correct key stage for your child's age — KS1 (ages 5–7), KS2 (7–11), KS3 (11–14), and KS4 (14–16). Topics, vocabulary, and question style all match what your child's school is teaching.</div>
+    </div>
+    <div class="faq" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Does it work for children with dyslexia or learning difficulties?</div>
+      <div class="faq-a">Yes — this is something we designed deliberately. Every lesson has a built-in read-aloud button that reads the full lesson text aloud at adjustable speeds (slower, normal, faster). Children with dyslexia, ADHD, or any reading difficulty can listen to the lesson rather than reading it, and then focus on answering the questions at their own pace.</div>
+    </div>
+    <div class="faq" onclick="this.classList.toggle('open')">
+      <div class="faq-q">How is it different from other learning apps?</div>
+      <div class="faq-a">Most apps use pre-written question banks. BrightPath generates a completely fresh lesson every time — new content, new questions, new examples — tailored to your child's exact key stage. It also marks written answers with specific feedback on each one, not just multiple choice ticks. And the weekly parent report tells you exactly what Professor Hoot said about each lesson.</div>
+    </div>
+    <div class="faq" onclick="this.classList.toggle('open')">
+      <div class="faq-q">How long does a lesson take?</div>
+      <div class="faq-a">Each lesson takes 20–30 minutes. The content reads in around 10 minutes (or listen with read-aloud) and answering the questions takes another 10–15 minutes. There are 2 lessons per subject per day. Most families do 2–3 subjects on 2–3 days per week.</div>
+    </div>
+    <div class="faq" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Can my child redo a lesson to improve their score?</div>
+      <div class="faq-a">Yes — every marked lesson has a Redo button. Previous answers are pre-filled so your child only needs to edit the parts that needed improvement. They can see Professor Hoot's feedback on each question and use it to write a better answer. This is one of the most effective ways to actually learn from mistakes rather than just moving on.</div>
+    </div>
+    <div class="faq" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Is my child's data safe?</div>
+      <div class="faq-a">Yes. We collect only the minimum data needed — your email and your child's first name, age, and lesson responses. We never sell data, never show advertisements, and comply fully with UK GDPR. All data is secured so your child's information is only ever visible from your parent account.</div>
+    </div>
+    <div class="faq" onclick="this.classList.toggle('open')">
+      <div class="faq-q">What devices does it work on?</div>
+      <div class="faq-a">BrightPath works on any device with a modern browser — iPhone, iPad, Android tablet, laptop, Chromebook, or desktop. No app download required. It is fully optimised for touch screens so tablets work great.</div>
+    </div>
+    <div class="faq" onclick="this.classList.toggle('open')">
+      <div class="faq-q">How do I cancel?</div>
+      <div class="faq-a">You can cancel at any time from the Parent settings page inside the app — no phone calls, no emails, no forms. You keep full access until the end of your billing period. No surprise charges.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Your child is ready.<br><span class="grad">Are you?</span></h2>
+  <p>Start your free 7-day trial today — no card required. See what BrightPath can do for your child this week.</p>
+  <div class="cta-features">
+    <div class="cta-feat">7-day free trial</div>
+    <div class="cta-feat">No card required</div>
+    <div class="cta-feat">Read-aloud support</div>
+    <div class="cta-feat">Ages 5–16</div>
+    <div class="cta-feat">Cancel anytime</div>
+  </div>
+  <a href="app.html" class="btn-cta" style="font-size:17px;padding:18px 44px">Start free trial →</a>
+  <p style="font-size:13px;color:rgba(255,255,255,0.3);margin-top:16px">Questions? <a href="mailto:hello@thebrightpath.uk" style="color:var(--muted)">hello@thebrightpath.uk</a></p>
+</div>
+
+<footer>
+  <p>© 2026 BrightPath · thebrightpath.uk</p>
+  <div class="footer-links">
+    <a href="app.html">Privacy Policy</a>
+    <a href="app.html">Terms</a>
+    <a href="mailto:hello@thebrightpath.uk">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
