@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BrightPath — Engineering Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap');
 
   :root {
     --bg: #0a0a0f;
@@ -180,7 +182,7 @@
 
   .t-head {
     display: grid;
-    grid-template-columns: 85px 95px 1fr 150px 110px 110px 90px;
+    grid-template-columns: 44px 85px 95px 1fr 150px 110px 110px 90px;
     padding: 11px 20px; border-bottom: 1px solid var(--border);
     background: var(--surface2);
   }
@@ -188,7 +190,7 @@
 
   .t-row {
     display: grid;
-    grid-template-columns: 85px 95px 1fr 150px 110px 110px 90px;
+    grid-template-columns: 44px 85px 95px 1fr 150px 110px 110px 90px;
     padding: 13px 20px; border-bottom: 1px solid rgba(42,42,58,0.5);
     align-items: center; cursor: pointer; transition: background 0.15s;
   }
@@ -413,6 +415,7 @@
   <!-- Table -->
   <div class="table-wrap">
     <div class="t-head">
+      <div class="th" style="cursor:pointer" onclick="toggleSort()" title="Sort by backlog order">#</div>
       <div class="th">Type</div>
       <div class="th">Priority</div>
       <div class="th">Title</div>
@@ -443,6 +446,12 @@
 <script>
   let URL_ = '', KEY_ = '';
   let items = [], statusF = '', typeF = '', priF = '', activeId = null;
+  let sortByOrder = true;
+
+  function toggleSort() {
+    sortByOrder = !sortByOrder;
+    render();
+  }
 
   window.onload = () => {
     URL_ = localStorage.getItem('bp_sb_url') || '';
@@ -502,11 +511,23 @@
   }
 
   function filtered() {
-    return items.filter(i =>
+    let rows = items.filter(i =>
       (!statusF || i.status === statusF) &&
       (!typeF || i.type === typeF) &&
       (!priF || i.priority === priF)
     );
+    if (sortByOrder) {
+      rows = [...rows].sort((a, b) => (a.backlog_order ?? 999) - (b.backlog_order ?? 999));
+    }
+    return rows;
+  }
+
+  function sprintLabel(order) {
+    if (!order) return '<span style="color:var(--text-dim);font-size:10px">—</span>';
+    if (order >= 90) return '<span style="color:var(--accent3);font-size:10px">✓</span>';
+    const sprint = order <= 4 ? 'S1' : order <= 7 ? 'S2' : order <= 9 ? 'S3' : 'S4';
+    const col = order <= 4 ? 'var(--critical)' : order <= 7 ? '#a78bfa' : order <= 9 ? 'var(--accent4)' : 'var(--accent3)';
+    return `<span style="font-size:10px;font-weight:700;color:${col};font-family:var(--mono)">${sprint}</span>`;
   }
 
   function render() {
@@ -517,9 +538,10 @@
     }
     document.getElementById('tbody').innerHTML = rows.map(r => `
       <div class="t-row" onclick="openPanel('${r.id}')">
+        <div class="td" style="text-align:center">${sprintLabel(r.backlog_order)}</div>
         <div class="td"><span class="type-pill tp-${r.type}">${r.type}</span></div>
         <div class="td"><span class="pdot pd-${r.priority}"></span><span style="font-size:11px;text-transform:capitalize">${r.priority}</span></div>
-        <div class="td title-td">${esc(r.title)}</div>
+        <div class="td title-td">${esc(r.title)}${r.source==='user_survey'?'<span style="margin-left:6px;font-size:9px;background:rgba(247,151,30,0.15);color:var(--accent4);border:1px solid rgba(247,151,30,0.25);padding:1px 5px;border-radius:3px;font-weight:600">CUST</span>':''}</div>
         <div class="td"><span class="status-pill sp-${r.status}">${r.status.replace(/_/g,' ')}</span></div>
         <div class="td">${r.assigned_version ? `<span class="vtag">${esc(r.assigned_version)}</span>` : '<span style="color:var(--text-dim);font-size:11px">—</span>'}</div>
         <div class="td">${r.deployed_version ? `<span class="vtag live">✓ ${esc(r.deployed_version)}</span>` : '<span style="color:var(--text-dim);font-size:11px">—</span>'}</div>
@@ -567,8 +589,9 @@
     activeId = id;
     const r = items.find(i => i.id === id);
     if (!r) return;
+    const isCustomer = r.source === 'user_survey' && r.customer_email;
     document.getElementById('panelBody').innerHTML = `
-      <div><span class="type-pill tp-${r.type}">${r.type}</span></div>
+      <div><span class="type-pill tp-${r.type}">${r.type}</span>${isCustomer ? `<span style="margin-left:8px;font-size:10px;background:rgba(247,151,30,0.15);color:var(--accent4);border:1px solid rgba(247,151,30,0.3);padding:2px 8px;border-radius:4px;font-weight:600">CUSTOMER</span>` : ''}</div>
       <div class="panel-title">${esc(r.title)}</div>
       <div class="meta-grid">
         <div class="meta-item"><div class="ml">Priority</div><div class="mv"><span class="pdot pd-${r.priority}"></span>${r.priority}</div></div>
@@ -576,10 +599,35 @@
         <div class="meta-item"><div class="ml">Created By</div><div class="mv">${esc(r.created_by)}</div></div>
         <div class="meta-item"><div class="ml">Created</div><div class="mv">${new Date(r.created_at).toLocaleDateString('en-GB')}</div></div>
       </div>
+
+      ${isCustomer ? `
+      <div class="section" style="border:1px solid rgba(247,151,30,0.2);border-radius:8px;padding:14px;background:rgba(247,151,30,0.04);margin-bottom:16px">
+        <div class="section-title" style="color:var(--accent4)">Customer Information</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <div><div class="ml" style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px">Name</div><div style="font-size:12px">${esc(r.customer_name||'—')}</div></div>
+          <div><div class="ml" style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px">Child</div><div style="font-size:12px">${esc(r.customer_child_name||'—')}</div></div>
+        </div>
+        <div style="margin-bottom:10px"><div class="ml" style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px">Email</div>
+          <div style="font-size:12px;display:flex;align-items:center;gap:8px">
+            ${esc(r.customer_email)}
+            <a href="mailto:${esc(r.customer_email)}?subject=Re: Your BrightPath feedback — ${esc(r.title)}" style="font-size:10px;color:var(--accent);border:1px solid rgba(108,99,255,0.3);padding:2px 8px;border-radius:4px;text-decoration:none">✉ Email</a>
+          </div>
+        </div>
+        <div>
+          <div class="ml" style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px">Screening Status</div>
+          <select id="pScreeningStatus" style="width:100%;background:var(--bg);border:1px solid rgba(247,151,30,0.3);border-radius:8px;padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:8px">
+            ${['not_required','pending','contacted','resolved','abandoned'].map(s =>
+              `<option value="${s}" ${(r.screening_status||'not_required')===s?'selected':''}>${s.replace(/_/g,' ')}</option>`
+            ).join('')}
+          </select>
+          <textarea id="pScreeningNotes" placeholder="Screening notes — what's missing? What did you ask the customer?" style="width:100%;background:var(--bg);border:1px solid rgba(247,151,30,0.2);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;resize:vertical;min-height:60px">${esc(r.screening_notes||'')}</textarea>
+        </div>
+      </div>` : ''}
+
       ${r.description ? `<div class="section"><div class="section-title">Description</div><div class="section-text">${esc(r.description)}</div></div>` : ''}
       <div class="section">
         <div class="section-title">Status</div>
-        <select class="field input" id="pStatus" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:10px">
+        <select id="pStatus" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:10px">
           ${['new','screening','assigned_to_you','in_progress','blocked','done','backlog'].map(s =>
             `<option value="${s}" ${r.status===s?'selected':''}>${s.replace(/_/g,' ')}</option>`
           ).join('')}
@@ -606,16 +654,25 @@
 
   async function savePanel() {
     if (!activeId) return;
+    const r = items.find(i => i.id === activeId);
+    const payload = {
+      status: document.getElementById('pStatus').value,
+      notes: document.getElementById('pNotes').value,
+      assigned_version: document.getElementById('pAssigned').value.trim() || null,
+      deployed_version: document.getElementById('pDeployed').value.trim() || null,
+      updated_at: new Date().toISOString()
+    };
+    // Include screening fields if this is a customer item
+    if (r && r.source === 'user_survey') {
+      const ss = document.getElementById('pScreeningStatus');
+      const sn = document.getElementById('pScreeningNotes');
+      if (ss) payload.screening_status = ss.value;
+      if (sn) payload.screening_notes = sn.value;
+    }
     try {
       await req(`work_items?id=eq.${activeId}`, {
         method: 'PATCH', prefer: 'return=minimal',
-        body: JSON.stringify({
-          status: document.getElementById('pStatus').value,
-          notes: document.getElementById('pNotes').value,
-          assigned_version: document.getElementById('pAssigned').value.trim() || null,
-          deployed_version: document.getElementById('pDeployed').value.trim() || null,
-          updated_at: new Date().toISOString()
-        })
+        body: JSON.stringify(payload)
       });
       toast_('✓ Saved', 'ok');
       closePanel();
