@@ -484,7 +484,7 @@
     const ico = document.getElementById('syncIco');
     ico.classList.add('spin');
     try {
-      items = await req('work_items?select=*&order=created_at.desc') || [];
+      items = await req('work_items?select=*&order=backlog_order.asc.nullslast,created_at.desc') || [];
       updateStats();
       render();
       renderVersions();
