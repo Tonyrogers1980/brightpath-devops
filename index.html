@@ -3,417 +3,664 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BrightPath — Learning Support Built for Your Child</title>
-<meta name="description" content="Personalised AI learning support for children who need a little extra help. Built by a dad, inspired by his son. Aligned to the UK National Curriculum.">
-<meta property="og:title" content="BrightPath — Extra Practice for Kids">
-<meta property="og:description" content="AI lessons personalised to your child's year group. Automatically marked. Read-aloud support. Perfect for 2-3 sessions a week alongside school.">
-<meta property="og:url" content="https://thebrightpath.uk">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<title>BrightPath — Engineering Hub</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0f0e17;--surface:#1a1825;--surface2:#231f35;--border:rgba(255,255,255,0.08);--text:#fffffe;--muted:rgba(255,255,255,0.6);--accent:#7c6af7;--accent2:#f7596a;--success:#69f0ae;--radius:16px;--radius-sm:10px}
-html{scroll-behavior:smooth}
-body{font-family:'Nunito Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Nunito',sans-serif}
-a{color:var(--accent);text-decoration:none}
-.container{max-width:740px;margin:0 auto;padding:0 20px}
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap');
 
-/* NAV */
-nav{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;max-width:740px;margin:0 auto;position:sticky;top:0;z-index:100;background:rgba(15,14,23,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-.logo{font-family:Nunito,sans-serif;font-weight:900;font-size:20px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-links{display:flex;align-items:center;gap:16px}
-.nav-link{font-size:14px;color:var(--muted);font-weight:600;transition:color 0.15s}
-.nav-link:hover{color:var(--text)}
-.nav-btn{background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:10px 20px;font-family:Nunito,sans-serif;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;transition:all 0.15s}
-.nav-btn:hover{filter:brightness(1.1)}
-.nav-login{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-sm);padding:10px 20px;font-family:Nunito,sans-serif;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;transition:all 0.15s}
-.nav-login:hover{border-color:var(--accent);color:var(--accent)}
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: #2a2a3a;
+    --accent: #6c63ff;
+    --accent2: #ff6b6b;
+    --accent3: #43e97b;
+    --accent4: #f7971e;
+    --text: #e8e8f0;
+    --text-dim: #7a7a9a;
+    --text-bright: #ffffff;
+    --critical: #ff4757;
+    --high: #ff6b35;
+    --medium: #ffd32a;
+    --low: #2ed573;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Syne', sans-serif;
+  }
 
-/* HERO */
-.hero{padding:72px 20px 52px;text-align:center;max-width:740px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,106,247,0.12);border:1px solid rgba(124,106,247,0.25);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:24px}
-.hero h1{font-size:clamp(36px,6vw,56px);font-weight:900;line-height:1.1;margin-bottom:18px;letter-spacing:-0.5px}
-.grad{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{font-size:18px;color:var(--muted);max-width:500px;margin:0 auto 32px;line-height:1.75}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
-.btn-cta{background:linear-gradient(135deg,var(--accent),#9c5cf7);color:#fff;border:none;border-radius:var(--radius-sm);padding:16px 32px;font-family:Nunito,sans-serif;font-weight:800;font-size:16px;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.15s;box-shadow:0 4px 24px rgba(124,106,247,0.35)}
-.btn-cta:hover{transform:translateY(-2px);filter:brightness(1.08)}
-.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.18);border-radius:var(--radius-sm);padding:16px 28px;font-family:Nunito,sans-serif;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.15s}
-.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
-.hero-note{font-size:13px;color:rgba(255,255,255,0.3)}
-.hero-note span{margin:0 8px}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* TRUST BAR */
-.trust{display:flex;justify-content:center;align-items:center;gap:24px;padding:18px 20px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:0 20px;flex-wrap:wrap}
-.trust-item{font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-/* SECTIONS */
-.section{padding:64px 20px;max-width:740px;margin:0 auto}
-.section-tag{font-size:12px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px}
-.section h2{font-size:clamp(26px,4vw,38px);font-weight:900;margin-bottom:10px;letter-spacing:-0.3px}
-.section-sub{font-size:16px;color:var(--muted);margin-bottom:36px;max-width:520px;line-height:1.7}
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(108,99,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(108,99,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-/* HOW IT WORKS */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:all 0.2s}
-.step:hover{border-color:rgba(124,106,247,0.4);transform:translateY(-2px)}
-.step-num{width:36px;height:36px;border-radius:50%;background:rgba(124,106,247,0.15);border:1px solid rgba(124,106,247,0.3);display:flex;align-items:center;justify-content:center;font-family:Nunito,sans-serif;font-weight:900;color:var(--accent);font-size:15px;margin-bottom:14px}
-.step h3{font-family:Nunito,sans-serif;font-size:15px;font-weight:800;margin-bottom:8px}
-.step p{font-size:13px;color:var(--muted);line-height:1.65}
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
 
-/* USE CASES */
-.usecases{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
-.uc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all 0.2s}
-.uc:hover{border-color:rgba(124,106,247,0.3)}
-.uc-icon{font-size:28px;margin-bottom:10px;display:block}
-.uc h3{font-family:Nunito,sans-serif;font-size:15px;font-weight:800;margin-bottom:6px}
-.uc p{font-size:13px;color:var(--muted);line-height:1.65}
+  .logo {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-bright);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 
-/* SUBJECTS */
-.subjects{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:24px 0}
-.subj{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 10px;text-align:center;transition:all 0.2s}
-.subj:hover{border-color:rgba(124,106,247,0.4);transform:translateY(-2px)}
-.subj-e{font-size:28px;display:block;margin-bottom:6px}
-.subj-n{font-family:Nunito,sans-serif;font-size:13px;font-weight:800}
-.subj-k{font-size:11px;color:var(--muted);margin-top:3px}
+  .logo-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulse 2s infinite;
+  }
 
-/* PROFESSOR HOOT */
-.professor{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;display:flex;gap:24px;align-items:flex-start;margin-top:24px}
-.prof-emoji{font-size:60px;flex-shrink:0;line-height:1}
-.prof-content h3{font-family:Nunito,sans-serif;font-size:22px;font-weight:900;margin-bottom:8px}
-.prof-content p{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:14px}
-.feedback-example{background:var(--surface2);border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.7;border-left:3px solid var(--accent)}
-.feedback-q{font-size:12px;color:var(--muted);margin-bottom:6px;font-style:italic}
+  @keyframes pulse {
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:0.6;transform:scale(0.8)}
+  }
 
-/* FEATURES GRID */
-.features{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.feat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;gap:14px;transition:all 0.2s}
-.feat:hover{border-color:rgba(124,106,247,0.3)}
-.feat-icon{font-size:26px;flex-shrink:0;line-height:1.2}
-.feat h3{font-family:Nunito,sans-serif;font-size:14px;font-weight:800;margin-bottom:5px}
-.feat p{font-size:13px;color:var(--muted);line-height:1.65}
-.feat-new{display:inline-block;font-size:10px;font-weight:800;background:rgba(105,240,174,0.15);color:var(--success);border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+  .header-right { display: flex; align-items: center; gap: 12px; }
 
-/* SOCIAL PROOF */
+  .env-badge {
+    font-size: 10px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 4px;
+    background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3);
+    color: var(--accent);
+  }
 
+  .btn {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-dim); padding: 6px 14px; border-radius: 6px;
+    font-family: var(--mono); font-size: 11px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.accent { background: var(--accent); border-color: var(--accent); color: white; }
+  .btn.accent:hover { opacity: 0.85; }
 
-/* PRICING */
-.pricing{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
-.price-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
-.price-card.featured{border-color:rgba(124,106,247,0.5);position:relative;background:rgba(124,106,247,0.05)}
-.feat-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;border-radius:20px;padding:4px 16px;font-size:12px;font-weight:800;white-space:nowrap}
-.price-name{font-family:Nunito,sans-serif;font-size:17px;font-weight:900;margin-bottom:4px}
-.price-desc{font-size:13px;color:var(--muted);margin-bottom:14px}
-.price-amount{font-family:Nunito,sans-serif;font-size:42px;font-weight:900;line-height:1}
-.price-amount sup{font-size:20px;vertical-align:super}
-.price-amount span{font-size:15px;color:var(--muted);font-weight:400}
-.price-trial{font-size:13px;color:var(--success);margin:10px 0 16px;font-weight:600}
-.price-compare{font-size:12px;color:var(--muted);margin-bottom:16px;font-style:italic}
-.price-features{list-style:none;margin-bottom:22px}
-.price-features li{font-size:13px;color:var(--muted);padding:6px 0;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid var(--border)}
-.price-features li:last-child{border:none}
-.price-features li::before{content:'✓';color:var(--success);font-weight:800;flex-shrink:0;margin-top:1px}
-.btn-price{display:block;text-align:center;padding:14px;border-radius:var(--radius-sm);font-family:Nunito,sans-serif;font-weight:800;font-size:15px;text-decoration:none;transition:all 0.15s}
-.btn-price-primary{background:var(--accent);color:#fff}
-.btn-price-primary:hover{filter:brightness(1.08)}
-.btn-price-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
-.btn-price-outline:hover{border-color:var(--accent);color:var(--accent)}
+  .spin { animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-/* FAQ */
-.faq-wrap{margin-top:24px}
-.faq{border-bottom:1px solid var(--border)}
-.faq-q{padding:16px 0;display:flex;justify-content:space-between;align-items:center;font-family:Nunito,sans-serif;font-weight:700;font-size:15px;gap:12px;cursor:pointer;user-select:none}
-.faq-q::after{content:'+';font-size:22px;color:var(--muted);flex-shrink:0;transition:transform 0.2s;line-height:1}
-.faq.open .faq-q::after{transform:rotate(45deg)}
-.faq-a{font-size:14px;color:var(--muted);line-height:1.8;padding-bottom:16px;display:none}
-.faq.open .faq-a{display:block}
+  /* Config */
+  .overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .overlay.hidden { display: none; }
 
-/* CTA */
-.cta-section{padding:80px 20px;text-align:center;max-width:740px;margin:0 auto}
-.cta-section h2{font-size:clamp(28px,5vw,46px);font-weight:900;margin-bottom:14px;line-height:1.15;letter-spacing:-0.3px}
-.cta-section p{font-size:16px;color:var(--muted);margin-bottom:32px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.7}
-.cta-features{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:0 0 28px}
-.cta-feat{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:5px}
-.cta-feat::before{content:'✓';color:var(--success);font-weight:800}
+  .modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 40px; width: 480px; max-width: 90vw;
+  }
+  .modal h2 { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px; }
+  .modal p { font-size: 12px; color: var(--text-dim); margin-bottom: 28px; line-height: 1.6; }
 
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:28px 20px;max-width:740px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-footer p{font-size:12px;color:rgba(255,255,255,0.3)}
-.footer-links{display:flex;gap:16px}
-.footer-links a{font-size:12px;color:rgba(255,255,255,0.3);transition:color 0.15s}
-.footer-links a:hover{color:var(--muted)}
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+  .field input, .field select, .field textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px; font-family: var(--mono);
+    font-size: 12px; color: var(--text); outline: none; transition: border-color 0.2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
+  .field textarea { resize: vertical; min-height: 80px; }
 
-@media(max-width:540px){
-  .steps{grid-template-columns:1fr}
-  .usecases{grid-template-columns:1fr}
-  .subjects{grid-template-columns:repeat(3,1fr)}
-  .features{grid-template-columns:1fr}
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  .pricing{grid-template-columns:1fr}
-  .hero-btns{flex-direction:column;align-items:center}
-  .trust{gap:12px}
-  footer{flex-direction:column;text-align:center}
-  .professor{flex-direction:column}
-}
+  .btn-full { width: 100%; padding: 12px; font-size: 13px; font-weight: 600; margin-top: 8px; border-radius: 8px; cursor: pointer; font-family: var(--mono); }
+  .btn-primary { background: var(--accent); border: none; color: white; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
+  .btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
+  .modal-actions { display: flex; gap: 12px; margin-top: 8px; }
+
+  /* Main */
+  .main { position: relative; z-index: 1; padding: 28px 32px; max-width: 1600px; margin: 0 auto; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 28px; }
+
+  .stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; cursor: pointer; transition: all 0.2s;
+  }
+  .stat:hover, .stat.active { border-color: var(--accent); background: rgba(108,99,255,0.06); }
+  .stat-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+  .stat-val { font-family: var(--display); font-size: 26px; font-weight: 800; color: var(--text-bright); line-height: 1; }
+  .stat.s-new .stat-val { color: var(--text-dim); }
+  .stat.s-screening .stat-val { color: var(--accent); }
+  .stat.s-assigned .stat-val { color: #a78bfa; }
+  .stat.s-inprogress .stat-val { color: var(--accent4); }
+  .stat.s-blocked .stat-val { color: var(--accent2); }
+  .stat.s-done .stat-val { color: var(--accent3); }
+
+  /* Toolbar */
+  .toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-group { display: flex; align-items: center; gap: 6px; }
+  .filter-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+  .fbtn {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 5px;
+    padding: 5px 10px; font-family: var(--mono); font-size: 11px; color: var(--text-dim);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .fbtn:hover, .fbtn.on { border-color: var(--accent); color: var(--accent); background: rgba(108,99,255,0.08); }
+  .sep { width: 1px; height: 22px; background: var(--border); }
+  .ml-auto { margin-left: auto; }
+
+  /* Table */
+  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+
+  .t-head {
+    display: grid;
+    grid-template-columns: 85px 95px 1fr 150px 110px 110px 90px;
+    padding: 11px 20px; border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .th { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); }
+
+  .t-row {
+    display: grid;
+    grid-template-columns: 85px 95px 1fr 150px 110px 110px 90px;
+    padding: 13px 20px; border-bottom: 1px solid rgba(42,42,58,0.5);
+    align-items: center; cursor: pointer; transition: background 0.15s;
+  }
+  .t-row:last-child { border-bottom: none; }
+  .t-row:hover { background: rgba(108,99,255,0.04); }
+
+  .td { font-size: 12px; color: var(--text); padding-right: 10px; }
+
+  .type-pill {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 7px; border-radius: 4px;
+  }
+  .tp-bug { background: rgba(255,71,87,0.15); color: var(--critical); border: 1px solid rgba(255,71,87,0.25); }
+  .tp-feature { background: rgba(108,99,255,0.15); color: var(--accent); border: 1px solid rgba(108,99,255,0.25); }
+  .tp-feedback { background: rgba(67,233,123,0.1); color: var(--accent3); border: 1px solid rgba(67,233,123,0.25); }
+  .tp-story { background: rgba(247,151,30,0.15); color: var(--accent4); border: 1px solid rgba(247,151,30,0.25); }
+
+  .pdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+  .pd-critical { background: var(--critical); box-shadow: 0 0 6px var(--critical); }
+  .pd-high { background: var(--high); }
+  .pd-medium { background: var(--medium); }
+  .pd-low { background: var(--low); }
+
+  .status-pill {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 20px;
+  }
+  .sp-new { background: rgba(122,122,154,0.15); color: var(--text-dim); }
+  .sp-screening { background: rgba(108,99,255,0.18); color: var(--accent); }
+  .sp-assigned_to_you { background: rgba(167,139,250,0.18); color: #a78bfa; }
+  .sp-in_progress { background: rgba(247,151,30,0.18); color: var(--accent4); }
+  .sp-blocked { background: rgba(255,107,107,0.18); color: var(--accent2); }
+  .sp-done { background: rgba(67,233,123,0.13); color: var(--accent3); }
+  .sp-backlog { background: rgba(42,42,58,0.5); color: #555570; }
+
+  .title-td {
+    font-size: 13px; color: var(--text-bright); font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 16px;
+  }
+
+  .vtag {
+    font-size: 10px; font-family: var(--mono); padding: 2px 6px;
+    border-radius: 4px; border: 1px solid var(--border); background: var(--surface2); color: var(--text-dim);
+  }
+  .vtag.live { color: var(--accent3); border-color: rgba(67,233,123,0.3); background: rgba(67,233,123,0.07); }
+
+  .edit-btn {
+    background: transparent; border: 1px solid var(--border); border-radius: 4px;
+    padding: 3px 8px; font-family: var(--mono); font-size: 10px;
+    color: var(--text-dim); cursor: pointer; transition: all 0.2s;
+  }
+  .edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Detail panel */
+  .panel {
+    position: fixed; top: 0; right: 0; width: 460px; height: 100vh;
+    background: var(--surface); border-left: 1px solid var(--border);
+    z-index: 150; transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    overflow-y: auto; padding: 28px;
+  }
+  .panel.open { transform: translateX(0); }
+
+  .panel-close {
+    position: absolute; top: 18px; right: 18px;
+    background: transparent; border: 1px solid var(--border); border-radius: 6px;
+    width: 30px; height: 30px; color: var(--text-dim); cursor: pointer;
+    font-size: 14px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .panel-close:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  .panel-title { font-family: var(--display); font-size: 19px; font-weight: 700; color: var(--text-bright); margin: 12px 0 16px; line-height: 1.3; }
+
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
+  .meta-item .ml { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 3px; }
+  .meta-item .mv { font-size: 12px; color: var(--text); }
+
+  .section { margin-bottom: 20px; }
+  .section-title {
+    font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  }
+  .section-text { font-size: 13px; color: var(--text); line-height: 1.7; }
+
+  /* Version tracker */
+  .version-strip {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 20px; margin-top: 18px;
+    display: none;
+  }
+  .vs-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text-bright); margin-bottom: 12px; }
+  .vs-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .vs-chip {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 12px; font-size: 11px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .vs-chip .vn { font-weight: 700; color: var(--accent3); }
+  .vs-chip .vc { color: var(--text-dim); }
+
+  /* Empty / loading */
+  .empty { padding: 56px 20px; text-align: center; color: var(--text-dim); }
+  .empty h3 { font-family: var(--display); font-size: 17px; color: var(--text); margin-bottom: 6px; }
+  .empty p { font-size: 13px; line-height: 1.6; }
+  .loading { padding: 56px 20px; text-align: center; color: var(--text-dim); font-size: 13px; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 28px; right: 28px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 11px 18px; font-size: 13px; color: var(--text);
+    z-index: 300; transform: translateY(80px); opacity: 0; transition: all 0.3s;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.ok { border-color: var(--accent3); color: var(--accent3); }
+  .toast.err { border-color: var(--accent2); color: var(--accent2); }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo">✨ BrightPath</div>
-  <div class="nav-links">
-    <a href="#story" class="nav-link">Our story</a>
-    <a href="#features" class="nav-link">Features</a>
-    <a href="#pricing" class="nav-link">Pricing</a>
-    <a href="app.html?mode=login" class="nav-login">Log in</a>
-    <a href="app.html" class="nav-btn">Start free trial</a>
+<!-- Config overlay -->
+<div class="overlay" id="cfgOverlay">
+  <div class="modal">
+    <h2>⚡ BrightPath Engineering Hub</h2>
+    <p>Connect to your Supabase project. Find these in Supabase → Settings → API.</p>
+    <div class="field"><label>Supabase Project URL</label><input id="cfgUrl" type="text" placeholder="https://xxxxxxxxxxxx.supabase.co" /></div>
+    <div class="field"><label>Supabase Anon Key</label><input id="cfgKey" type="password" placeholder="eyJhbGciOiJIUzI1NiIs..." /></div>
+    <button class="btn-full btn-primary" onclick="saveConfig()">Connect →</button>
   </div>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">🇬🇧 Aligned to the UK National Curriculum</div>
-  <h1>Your child is <span class="grad">brighter</span><br>than their results show.</h1>
-  <p class="hero-sub">BrightPath gives every child personalised learning support that goes at their pace — not the classroom's. Whether they're in school and need extra help, or you homeschool full time.</p>
-  <div class="hero-btns">
-    <a href="app.html" class="btn-cta">Start free — no card needed →</a>
-    <a href="#how" class="btn-outline">See how it works</a>
-  </div>
-  <p class="hero-note"><span style="color:var(--success)">No card required</span><span>·</span><span>7-day free trial</span><span>·</span><span>Cancel anytime</span></p>
 </div>
 
-<div class="trust">
-  <div class="trust-item">🇬🇧 UK National Curriculum</div>
-  <div class="trust-item">🔒 GDPR Compliant</div>
-  <div class="trust-item">✅ Zero ads, ever</div>
-  <div class="trust-item">🎧 Read-aloud support</div>
-  <div class="trust-item">🧒 Ages 5–16</div>
-</div>
-
-<!-- FOUNDER STORY -->
-<div class="section" id="story" style="background:rgba(124,106,247,0.04);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding:64px 20px">
-  <div style="max-width:680px;margin:0 auto">
-    <div class="section-tag">Why BrightPath exists</div>
-    <h2 style="margin-bottom:20px">Built by a dad.<br><span class="grad">Inspired by an extraordinary boy.</span></h2>
-    <p style="font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:16px">My son Rory is 10. He's autistic, fiercely bright, and one of the most articulate people I've ever met. He has a vocabulary that stops adults mid-conversation, a strong sense of justice, and opinions on absolutely everything — delivered with complete confidence.</p>
-    <p style="font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:16px">His teachers have always said the same thing: Rory is incredibly clever, but he needs to slow down. Read the question. Check the detail. Get what's in his head onto the page.</p>
-    <p style="font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:16px">But Rory isn't unique in that. When I talked to other parents, I kept hearing it. <em>She's bright but losing confidence. He understands it but can't show it. She just needs someone to go at her pace.</em></p>
-    <p style="font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:24px">So when Rory and I had two weeks at home together, I asked him what he actually needed. He told me — clearly, in that very Rory way. And then we built it together, at the kitchen table.</p>
-    <div style="display:flex;align-items:center;gap:14px">
-      <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:Nunito,sans-serif;font-weight:900;font-size:18px;color:#fff;flex-shrink:0">T</div>
-      <div>
-        <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px">Tony, founder of BrightPath</div>
-        <div style="font-size:13px;color:var(--muted)">Dad. Built this for Rory.</div>
+<!-- Add item overlay -->
+<div class="overlay hidden" id="addOverlay">
+  <div class="modal">
+    <h2>+ New Work Item</h2>
+    <p style="margin-bottom:20px"></p>
+    <div class="field-row">
+      <div class="field"><label>Type</label>
+        <select id="nType">
+          <option value="bug">🐛 Bug</option>
+          <option value="feature">✦ Feature</option>
+          <option value="story">📖 Story</option>
+          <option value="feedback">💬 Feedback</option>
+        </select>
+      </div>
+      <div class="field"><label>Priority</label>
+        <select id="nPriority">
+          <option value="critical">🔴 Critical</option>
+          <option value="high">🟠 High</option>
+          <option value="medium" selected>🟡 Medium</option>
+          <option value="low">🟢 Low</option>
+        </select>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- PROBLEM -->
-<div class="section">
-  <div class="section-tag">Why BrightPath</div>
-  <h2>"He's bright, but he just needs to slow down."</h2>
-  <p class="section-sub">Sound familiar? Every day, parents hear this from teachers. The ability is there — but something isn't clicking. The classroom moves too fast, support is stretched, and private tutors cost £30–50 an hour. BrightPath was built to change that.</p>
-  <div style="background:rgba(124,106,247,0.08);border:1px solid rgba(124,106,247,0.2);border-radius:var(--radius);padding:22px 24px;margin:24px 0">
-    <p style="font-size:15px;color:var(--text);line-height:1.8;margin:0">BrightPath generates a fresh, personalised practice session in under 20 seconds — pitched exactly at your child's key stage, automatically marked with feedback from Professor Hoot, and different every single time.</p>
-  </div>
-  <div class="usecases" id="how">
-    <div class="uc"><span class="uc-icon">📉</span><h3>Catch-up support</h3><p>Your child fell behind in maths or missed some English topics. BrightPath generates targeted practice at exactly their level with feedback explaining what went wrong and how to improve.</p></div>
-    <div class="uc"><span class="uc-icon">🚀</span><h3>Extension work</h3><p>Your child is ahead and needs more challenge. BrightPath generates harder questions and deeper content to keep them stretched and thinking.</p></div>
-    <div class="uc"><span class="uc-icon">📝</span><h3>Exam preparation</h3><p>SATs, 11+, GCSEs — BrightPath generates practice questions at the right level, marks them instantly, and tells your child exactly what to improve.</p></div>
-    <div class="uc"><span class="uc-icon">🎧</span><h3>Every kind of learner</h3><p>Every lesson has a built-in read-aloud button. Professor Hoot can read the full lesson text aloud at adjustable speeds — perfect for dyslexia, ADHD, or any child who finds reading difficult.</p></div>
-  </div>
-</div>
-
-
-
-<!-- HOW IT WORKS -->
-<div class="section" style="padding-top:0">
-  <div class="section-tag">How it works</div>
-  <h2>A complete session in 3 steps</h2>
-  <p class="section-sub">No prep, no printing, no marking. BrightPath handles everything.</p>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>Pick a subject</h3>
-      <p>Choose from Maths, English, Science, History, or Geography. BrightPath knows your child's exact year group and key stage.</p>
+    <div class="field"><label>Title</label><input id="nTitle" type="text" placeholder="Short descriptive title..." /></div>
+    <div class="field"><label>Description</label><textarea id="nDesc" placeholder="What needs doing? For bugs: steps to reproduce..."></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>Source</label>
+        <select id="nSource">
+          <option value="founder">Founder</option>
+          <option value="user_survey">User Survey</option>
+          <option value="testing">Testing</option>
+          <option value="analytics">Analytics</option>
+        </select>
+      </div>
+      <div class="field"><label>Created By</label><input id="nCreatedBy" type="text" value="Tony" /></div>
     </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>Generate a lesson</h3>
-      <p>A fresh, personalised lesson appears in under 20 seconds — with reading content, a curated educational video, and exam-style questions. Hit the 🔊 button for read-aloud support.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>Get marked instantly</h3>
-      <p>Answers are marked by Professor Hoot with per-question feedback, partial marks, and specific suggestions. Redo the lesson to improve the score.</p>
+    <div class="modal-actions">
+      <button class="btn-full btn-secondary" onclick="closeAdd()">Cancel</button>
+      <button class="btn-full btn-primary" onclick="submitAdd()">Create →</button>
     </div>
   </div>
 </div>
 
-<!-- PROFESSOR HOOT -->
-<div class="section" style="padding-top:0">
-  <div class="professor">
-    <div class="prof-emoji">🦉</div>
-    <div class="prof-content">
-      <h3>Meet Professor Hoot</h3>
-      <p>Every lesson is taught and marked by Professor Hoot — BrightPath's AI tutor. Not generic AI feedback, but specific, encouraging comments on each answer that tell your child exactly what they got right and how to improve. Parents get a weekly summary of Professor Hoot's feedback so they always know how their child is progressing.</p>
-      <div class="feedback-q">Professor Hoot marking a Year 8 Science answer:</div>
-      <div class="feedback-example">"Well done — you correctly identified that photosynthesis requires sunlight and carbon dioxide. For full marks next time, also mention that chlorophyll in the leaves absorbs the light energy. You are almost there — a really strong answer!"</div>
-    </div>
+<!-- Header -->
+<div class="header">
+  <div class="logo"><div class="logo-dot"></div>BrightPath Engineering</div>
+  <div class="header-right">
+    <div class="env-badge">LIVE</div>
+    <button class="btn" onclick="load()"><span id="syncIco">↻</span> Sync</button>
+    <button class="btn" onclick="document.getElementById('cfgOverlay').classList.remove('hidden')">⚙ Config</button>
+    <button class="btn accent" onclick="openAdd()">+ New Item</button>
   </div>
 </div>
 
-<!-- SUBJECTS -->
-<div class="section" style="padding-top:0">
-  <div class="section-tag">Subjects</div>
-  <h2>5 subjects, KS1 to KS4</h2>
-  <p class="section-sub">Every lesson is freshly generated and tailored to your child's exact year group and key stage. Two lessons per subject per day.</p>
-  <div class="subjects">
-    <div class="subj"><span class="subj-e">🔢</span><div class="subj-n">Maths</div><div class="subj-k">KS1–KS4</div></div>
-    <div class="subj"><span class="subj-e">📖</span><div class="subj-n">English</div><div class="subj-k">KS1–KS4</div></div>
-    <div class="subj"><span class="subj-e">🔬</span><div class="subj-n">Science</div><div class="subj-k">KS1–KS4</div></div>
-    <div class="subj"><span class="subj-e">🏛️</span><div class="subj-n">History</div><div class="subj-k">KS1–KS4</div></div>
-    <div class="subj"><span class="subj-e">🌍</span><div class="subj-n">Geography</div><div class="subj-k">KS1–KS4</div></div>
+<!-- Main -->
+<div class="main">
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat s-all active" onclick="fStatus('')" id="st-all"><div class="stat-label">Total</div><div class="stat-val" id="c-all">—</div></div>
+    <div class="stat s-new" onclick="fStatus('new')" id="st-new"><div class="stat-label">New</div><div class="stat-val" id="c-new">—</div></div>
+    <div class="stat s-screening" onclick="fStatus('screening')" id="st-screening"><div class="stat-label">Screening</div><div class="stat-val" id="c-screening">—</div></div>
+    <div class="stat s-assigned" onclick="fStatus('assigned_to_you')" id="st-assigned_to_you"><div class="stat-label">Assigned</div><div class="stat-val" id="c-assigned_to_you">—</div></div>
+    <div class="stat s-inprogress" onclick="fStatus('in_progress')" id="st-in_progress"><div class="stat-label">In Progress</div><div class="stat-val" id="c-in_progress">—</div></div>
+    <div class="stat s-blocked" onclick="fStatus('blocked')" id="st-blocked"><div class="stat-label">Blocked</div><div class="stat-val" id="c-blocked">—</div></div>
+    <div class="stat s-done" onclick="fStatus('done')" id="st-done"><div class="stat-label">Done</div><div class="stat-val" id="c-done">—</div></div>
   </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="filter-group">
+      <span class="filter-label">Type</span>
+      <button class="fbtn on" id="ft-" onclick="fType('')">All</button>
+      <button class="fbtn" id="ft-bug" onclick="fType('bug')">🐛 Bug</button>
+      <button class="fbtn" id="ft-feature" onclick="fType('feature')">✦ Feature</button>
+      <button class="fbtn" id="ft-story" onclick="fType('story')">📖 Story</button>
+      <button class="fbtn" id="ft-feedback" onclick="fType('feedback')">💬 Feedback</button>
+    </div>
+    <div class="sep"></div>
+    <div class="filter-group">
+      <span class="filter-label">Priority</span>
+      <button class="fbtn on" id="fp-" onclick="fPriority('')">All</button>
+      <button class="fbtn" id="fp-critical" onclick="fPriority('critical')">🔴 Critical</button>
+      <button class="fbtn" id="fp-high" onclick="fPriority('high')">🟠 High</button>
+      <button class="fbtn" id="fp-medium" onclick="fPriority('medium')">🟡 Medium</button>
+      <button class="fbtn" id="fp-low" onclick="fPriority('low')">🟢 Low</button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <div class="t-head">
+      <div class="th">Type</div>
+      <div class="th">Priority</div>
+      <div class="th">Title</div>
+      <div class="th">Status</div>
+      <div class="th">Assigned Ver</div>
+      <div class="th">Deployed Ver</div>
+      <div class="th">Action</div>
+    </div>
+    <div id="tbody"><div class="loading">Connecting to Supabase…</div></div>
+  </div>
+
+  <!-- Version tracker -->
+  <div class="version-strip" id="vStrip">
+    <div class="vs-title">📦 Deployed Versions</div>
+    <div class="vs-chips" id="vChips"></div>
+  </div>
+
 </div>
 
-<!-- FEATURES -->
-<div class="section" style="padding-top:0" id="features">
-  <div class="section-tag">Features</div>
-  <h2>Everything that makes kids come back</h2>
-  <p class="section-sub">BrightPath combines curriculum-aligned content with the motivation mechanics that actually work — and accessibility features that make it work for every child.</p>
-  <div class="features">
-    <div class="feat"><div class="feat-icon">🎧</div><div><h3>Read-aloud support</h3><p>Every lesson has a built-in read-aloud button. Professor Hoot reads the full lesson text aloud at adjustable speeds. Essential for dyslexia, ADHD, or any child who finds reading difficult.</p></div></div>
-    <div class="feat"><div class="feat-icon">🦉</div><div><h3>Professor Hoot feedback</h3><p>Specific, encouraging feedback on every answer — not just a tick or cross. Tells your child exactly what was right and what to improve, question by question.</p></div></div>
-    <div class="feat"><div class="feat-icon">🔄</div><div><h3>Redo to improve</h3><p>Every marked lesson can be redone with prior answers pre-filled. Children read the feedback, edit the weak parts, and resubmit for a better score. Learning from mistakes, not just testing.</p></div></div>
-    <div class="feat"><div class="feat-icon">🔥</div><div><h3>Daily challenges</h3><p>A bonus question every day worth double XP. Builds the habit of daily learning through a specific reason to open the app — today only.</p></div></div>
-    <div class="feat"><div class="feat-icon">⭐</div><div><h3>XP, ranks and badges</h3><p>Kids earn XP on every lesson, climb a rank ladder from Learner to Genius, and unlock named achievement badges as they progress. Motivation that lasts.</p></div></div>
-    <div class="feat"><div class="feat-icon">📊</div><div><h3>Weekly parent report</h3><p>Every Sunday, you receive a detailed email — lessons completed, scores, Professor Hoot's feedback summary, and day streak. Always know how your child is doing.</p></div></div>
-    <div class="feat"><div class="feat-icon">📺</div><div><h3>Curated educational videos</h3><p>Every lesson includes a relevant video from trusted UK channels like Oak National Academy and BBC Teach — matched to the exact topic and key stage.</p></div></div>
-    <div class="feat"><div class="feat-icon">👨‍👩‍👧</div><div><h3>Family plan</h3><p>Up to 4 children on one account, each with their own personalised profile, progress tracker, XP, badges, and lessons pitched at their exact level.</p></div></div>
-    <div class="feat"><div class="feat-icon">💾</div><div><h3>Autosave answers</h3><p>Answers save automatically as your child types. If they navigate away or the browser refreshes, their work is instantly restored. Nothing is ever lost.</p></div></div>
-    <div class="feat"><div class="feat-icon">🔒</div><div><h3>Safe and private</h3><p>No ads. No data selling. Children identified by first name only. Fully GDPR compliant. Your child's data is only ever visible to your account.</p></div></div>
-  </div>
+<!-- Detail panel -->
+<div class="panel" id="panel">
+  <button class="panel-close" onclick="closePanel()">✕</button>
+  <div id="panelBody"></div>
 </div>
 
-<!-- TESTIMONIALS -->
+<div class="toast" id="toast"></div>
 
+<script>
+  let URL_ = '', KEY_ = '';
+  let items = [], statusF = '', typeF = '', priF = '', activeId = null;
 
-<!-- PRICING -->
-<div class="section" id="pricing" style="padding-top:0">
-  <div class="section-tag">Pricing</div>
-  <h2>Simple, honest pricing</h2>
-  <p class="section-sub">Same features. Same Professor Hoot. Same unlimited lessons. The only difference is how many children are covered.</p>
-  <div class="pricing">
-    <div class="price-card">
-      <div class="price-name">Single child</div>
-      <div class="price-desc">Everything BrightPath offers, for one child</div>
-      <div class="price-amount"><sup>£</sup>9.99<span>/month</span></div>
-      <div style="font-size:13px;color:var(--accent);margin-bottom:4px;font-weight:600">or £89/year — save over 25%</div>
-      <div class="price-trial">✓ 7-day free trial — no card needed</div>
-      <div class="price-compare">Less than one tutoring session — with lessons every single day</div>
-      <ul class="price-features">
-        <li>1 child profile</li>
-        <li>All 5 subjects, KS1–KS4</li>
-        <li>Unlimited daily lessons</li>
-        <li>AI marking and feedback</li>
-        <li>Read-aloud support</li>
-        <li>XP, badges and daily challenges</li>
-        <li>Weekly parent progress report</li>
-        <li>Cancel anytime</li>
-      </ul>
-      <a href="app.html" class="btn-price btn-price-outline">Start free trial →</a>
-    </div>
-    <div class="price-card featured">
-      <div class="feat-badge">Most popular</div>
-      <div class="price-name">Family</div>
-      <div class="price-desc">Everything BrightPath offers, for up to 4 children</div>
-      <div class="price-amount"><sup>£</sup>14.99<span>/month</span></div>
-      <div style="font-size:13px;color:var(--accent);margin-bottom:4px;font-weight:600">or £129/year — save over 28%</div>
-      <div class="price-trial">✓ 7-day free trial — no card needed</div>
-      <div class="price-compare">Less than £4 per child per month — every subject, every day</div>
-      <ul class="price-features">
-        <li>Up to 4 child profiles — each personalised</li>
-        <li>All 5 subjects, KS1–KS4 per child</li>
-        <li>Unlimited daily lessons for every child</li>
-        <li>AI marking and feedback for every child</li>
-        <li>Read-aloud support</li>
-        <li>XP, badges and daily challenges per child</li>
-        <li>Weekly parent report covering all children</li>
-        <li>Cancel anytime</li>
-      </ul>
-      <a href="app.html" class="btn-price btn-price-primary">Start free trial →</a>
-    </div>
-  </div>
-  <p style="font-size:13px;color:var(--muted);text-align:center;margin-top:16px">Secure payment via Stripe · No contracts · Cancel anytime</p>
-  <p style="font-size:13px;color:var(--muted);text-align:center;margin-top:8px">Got two children? The family plan works out at <strong style="color:var(--text)">£7.50 each</strong>. Three children? <strong style="color:var(--text)">£5 each</strong>. Same features, just more covered.</p>
-</div>
+  window.onload = () => {
+    URL_ = localStorage.getItem('bp_sb_url') || '';
+    KEY_ = localStorage.getItem('bp_sb_key') || '';
+    if (URL_ && KEY_) {
+      document.getElementById('cfgOverlay').classList.add('hidden');
+      document.getElementById('cfgUrl').value = URL_;
+      document.getElementById('cfgKey').value = KEY_;
+      load();
+    }
+  };
 
-<!-- FAQ -->
-<div class="section" style="padding-top:0">
-  <div class="section-tag">FAQ</div>
-  <h2>Common questions</h2>
-  <div class="faq-wrap">
-    <div class="faq" onclick="this.classList.toggle('open')">
-      <div class="faq-q">Is BrightPath aligned to the UK curriculum?</div>
-      <div class="faq-a">Yes. Every lesson is generated specifically for the UK National Curriculum at the correct key stage for your child's age — KS1 (ages 5–7), KS2 (7–11), KS3 (11–14), and KS4 (14–16). Topics, vocabulary, and question style all match what your child's school is teaching.</div>
-    </div>
-    <div class="faq" onclick="this.classList.toggle('open')">
-      <div class="faq-q">Does it work for children with dyslexia or learning difficulties?</div>
-      <div class="faq-a">Yes — this is something we designed deliberately. Every lesson has a built-in read-aloud button that reads the full lesson text aloud at adjustable speeds (slower, normal, faster). Children with dyslexia, ADHD, or any reading difficulty can listen to the lesson rather than reading it, and then focus on answering the questions at their own pace.</div>
-    </div>
-    <div class="faq" onclick="this.classList.toggle('open')">
-      <div class="faq-q">How is it different from other learning apps?</div>
-      <div class="faq-a">Most apps use pre-written question banks. BrightPath generates a completely fresh lesson every time — new content, new questions, new examples — tailored to your child's exact key stage. It also marks written answers with specific feedback on each one, not just multiple choice ticks. And the weekly parent report tells you exactly what Professor Hoot said about each lesson.</div>
-    </div>
-    <div class="faq" onclick="this.classList.toggle('open')">
-      <div class="faq-q">How long does a lesson take?</div>
-      <div class="faq-a">Each lesson takes 20–30 minutes. The content reads in around 10 minutes (or listen with read-aloud) and answering the questions takes another 10–15 minutes. There are 2 lessons per subject per day. Most families do 2–3 subjects on 2–3 days per week.</div>
-    </div>
-    <div class="faq" onclick="this.classList.toggle('open')">
-      <div class="faq-q">Can my child redo a lesson to improve their score?</div>
-      <div class="faq-a">Yes — every marked lesson has a Redo button. Previous answers are pre-filled so your child only needs to edit the parts that needed improvement. They can see Professor Hoot's feedback on each question and use it to write a better answer. This is one of the most effective ways to actually learn from mistakes rather than just moving on.</div>
-    </div>
-    <div class="faq" onclick="this.classList.toggle('open')">
-      <div class="faq-q">Is my child's data safe?</div>
-      <div class="faq-a">Yes. We collect only the minimum data needed — your email and your child's first name, age, and lesson responses. We never sell data, never show advertisements, and comply fully with UK GDPR. All data is secured so your child's information is only ever visible from your parent account.</div>
-    </div>
-    <div class="faq" onclick="this.classList.toggle('open')">
-      <div class="faq-q">What devices does it work on?</div>
-      <div class="faq-a">BrightPath works on any device with a modern browser — iPhone, iPad, Android tablet, laptop, Chromebook, or desktop. No app download required. It is fully optimised for touch screens so tablets work great.</div>
-    </div>
-    <div class="faq" onclick="this.classList.toggle('open')">
-      <div class="faq-q">How do I cancel?</div>
-      <div class="faq-a">You can cancel at any time from the Parent settings page inside the app — no phone calls, no emails, no forms. You keep full access until the end of your billing period. No surprise charges.</div>
-    </div>
-  </div>
-</div>
+  function saveConfig() {
+    URL_ = document.getElementById('cfgUrl').value.trim().replace(/\/$/, '');
+    KEY_ = document.getElementById('cfgKey').value.trim();
+    if (!URL_ || !KEY_) { toast_('Enter both URL and key', 'err'); return; }
+    localStorage.setItem('bp_sb_url', URL_);
+    localStorage.setItem('bp_sb_key', KEY_);
+    document.getElementById('cfgOverlay').classList.add('hidden');
+    load();
+  }
 
-<!-- CTA -->
-<div class="cta-section">
-  <h2>Your child is ready.<br><span class="grad">Are you?</span></h2>
-  <p>Start your free 7-day trial today — no card required. See what BrightPath can do for your child this week.</p>
-  <div class="cta-features">
-    <div class="cta-feat">7-day free trial</div>
-    <div class="cta-feat">No card required</div>
-    <div class="cta-feat">Read-aloud support</div>
-    <div class="cta-feat">Ages 5–16</div>
-    <div class="cta-feat">Cancel anytime</div>
-  </div>
-  <a href="app.html" class="btn-cta" style="font-size:17px;padding:18px 44px">Start free trial →</a>
-  <p style="font-size:13px;color:rgba(255,255,255,0.3);margin-top:16px">Questions? <a href="mailto:hello@thebrightpath.uk" style="color:var(--muted)">hello@thebrightpath.uk</a></p>
-</div>
+  async function req(path, opts = {}) {
+    const res = await fetch(`${URL_}/rest/v1/${path}`, {
+      ...opts,
+      headers: {
+        'apikey': KEY_, 'Authorization': `Bearer ${KEY_}`,
+        'Content-Type': 'application/json',
+        'Prefer': opts.prefer || 'return=representation',
+        ...(opts.headers || {})
+      }
+    });
+    if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
+    const t = await res.text();
+    return t ? JSON.parse(t) : null;
+  }
 
-<footer>
-  <p>© 2026 BrightPath · thebrightpath.uk</p>
-  <div class="footer-links">
-    <a href="app.html">Privacy Policy</a>
-    <a href="app.html">Terms</a>
-    <a href="mailto:hello@thebrightpath.uk">Contact</a>
-  </div>
-</footer>
+  async function load() {
+    const ico = document.getElementById('syncIco');
+    ico.classList.add('spin');
+    try {
+      items = await req('work_items?select=*&order=created_at.desc') || [];
+      updateStats();
+      render();
+      renderVersions();
+    } catch(e) {
+      document.getElementById('tbody').innerHTML = `<div class="empty"><h3>Connection failed</h3><p>${e.message}</p></div>`;
+    } finally { ico.classList.remove('spin'); }
+  }
 
+  function updateStats() {
+    document.getElementById('c-all').textContent = items.length;
+    ['new','screening','assigned_to_you','in_progress','blocked','done','backlog'].forEach(s => {
+      const el = document.getElementById(`c-${s}`);
+      if (el) el.textContent = items.filter(i => i.status === s).length;
+    });
+  }
+
+  function filtered() {
+    return items.filter(i =>
+      (!statusF || i.status === statusF) &&
+      (!typeF || i.type === typeF) &&
+      (!priF || i.priority === priF)
+    );
+  }
+
+  function render() {
+    const rows = filtered();
+    if (!rows.length) {
+      document.getElementById('tbody').innerHTML = `<div class="empty"><h3>No items</h3><p>Adjust filters or add a new work item.</p></div>`;
+      return;
+    }
+    document.getElementById('tbody').innerHTML = rows.map(r => `
+      <div class="t-row" onclick="openPanel('${r.id}')">
+        <div class="td"><span class="type-pill tp-${r.type}">${r.type}</span></div>
+        <div class="td"><span class="pdot pd-${r.priority}"></span><span style="font-size:11px;text-transform:capitalize">${r.priority}</span></div>
+        <div class="td title-td">${esc(r.title)}</div>
+        <div class="td"><span class="status-pill sp-${r.status}">${r.status.replace(/_/g,' ')}</span></div>
+        <div class="td">${r.assigned_version ? `<span class="vtag">${esc(r.assigned_version)}</span>` : '<span style="color:var(--text-dim);font-size:11px">—</span>'}</div>
+        <div class="td">${r.deployed_version ? `<span class="vtag live">✓ ${esc(r.deployed_version)}</span>` : '<span style="color:var(--text-dim);font-size:11px">—</span>'}</div>
+        <div class="td"><button class="edit-btn" onclick="event.stopPropagation();openPanel('${r.id}')">Edit</button></div>
+      </div>
+    `).join('');
+  }
+
+  function renderVersions() {
+    const dep = items.filter(i => i.deployed_version);
+    const strip = document.getElementById('vStrip');
+    if (!dep.length) { strip.style.display = 'none'; return; }
+    strip.style.display = 'block';
+    const map = {};
+    dep.forEach(i => { map[i.deployed_version] = (map[i.deployed_version] || 0) + 1; });
+    document.getElementById('vChips').innerHTML = Object.entries(map)
+      .sort(([a],[b]) => b.localeCompare(a))
+      .map(([v, n]) => `<div class="vs-chip"><span class="vn">${esc(v)}</span><span class="vc">${n} item${n>1?'s':''}</span></div>`)
+      .join('');
+  }
+
+  function fStatus(s) {
+    statusF = s;
+    document.querySelectorAll('.stat').forEach(e => e.classList.remove('active'));
+    const el = document.getElementById(s ? `st-${s}` : 'st-all');
+    if (el) el.classList.add('active');
+    render();
+  }
+
+  function fType(t) {
+    typeF = t;
+    document.querySelectorAll('[id^="ft-"]').forEach(e => e.classList.remove('on'));
+    document.getElementById(`ft-${t}`).classList.add('on');
+    render();
+  }
+
+  function fPriority(p) {
+    priF = p;
+    document.querySelectorAll('[id^="fp-"]').forEach(e => e.classList.remove('on'));
+    document.getElementById(`fp-${p}`).classList.add('on');
+    render();
+  }
+
+  function openPanel(id) {
+    activeId = id;
+    const r = items.find(i => i.id === id);
+    if (!r) return;
+    document.getElementById('panelBody').innerHTML = `
+      <div><span class="type-pill tp-${r.type}">${r.type}</span></div>
+      <div class="panel-title">${esc(r.title)}</div>
+      <div class="meta-grid">
+        <div class="meta-item"><div class="ml">Priority</div><div class="mv"><span class="pdot pd-${r.priority}"></span>${r.priority}</div></div>
+        <div class="meta-item"><div class="ml">Source</div><div class="mv">${r.source}</div></div>
+        <div class="meta-item"><div class="ml">Created By</div><div class="mv">${esc(r.created_by)}</div></div>
+        <div class="meta-item"><div class="ml">Created</div><div class="mv">${new Date(r.created_at).toLocaleDateString('en-GB')}</div></div>
+      </div>
+      ${r.description ? `<div class="section"><div class="section-title">Description</div><div class="section-text">${esc(r.description)}</div></div>` : ''}
+      <div class="section">
+        <div class="section-title">Status</div>
+        <select class="field input" id="pStatus" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:10px">
+          ${['new','screening','assigned_to_you','in_progress','blocked','done','backlog'].map(s =>
+            `<option value="${s}" ${r.status===s?'selected':''}>${s.replace(/_/g,' ')}</option>`
+          ).join('')}
+        </select>
+      </div>
+      <div class="section">
+        <div class="section-title">Version Tracking</div>
+        <input id="pAssigned" type="text" placeholder="Assigned version e.g. v1.1.0" value="${esc(r.assigned_version||'')}" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:10px" />
+        <input id="pDeployed" type="text" placeholder="Deployed version e.g. v1.1.0 (once live)" value="${esc(r.deployed_version||'')}" style="width:100%;background:var(--bg);border:1px solid rgba(67,233,123,0.2);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:10px" />
+      </div>
+      <div class="section">
+        <div class="section-title">Notes</div>
+        <textarea id="pNotes" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;resize:vertical;min-height:90px">${esc(r.notes||'')}</textarea>
+      </div>
+      <button class="btn-full btn-primary" style="border-radius:8px;padding:12px;font-size:13px;font-weight:600;cursor:pointer" onclick="savePanel()">Save Changes</button>
+    `;
+    document.getElementById('panel').classList.add('open');
+  }
+
+  function closePanel() {
+    document.getElementById('panel').classList.remove('open');
+    activeId = null;
+  }
+
+  async function savePanel() {
+    if (!activeId) return;
+    try {
+      await req(`work_items?id=eq.${activeId}`, {
+        method: 'PATCH', prefer: 'return=minimal',
+        body: JSON.stringify({
+          status: document.getElementById('pStatus').value,
+          notes: document.getElementById('pNotes').value,
+          assigned_version: document.getElementById('pAssigned').value.trim() || null,
+          deployed_version: document.getElementById('pDeployed').value.trim() || null,
+          updated_at: new Date().toISOString()
+        })
+      });
+      toast_('✓ Saved', 'ok');
+      closePanel();
+      await load();
+    } catch(e) { toast_('Save failed: ' + e.message, 'err'); }
+  }
+
+  function openAdd() { document.getElementById('addOverlay').classList.remove('hidden'); }
+  function closeAdd() { document.getElementById('addOverlay').classList.add('hidden'); }
+
+  async function submitAdd() {
+    const title = document.getElementById('nTitle').value.trim();
+    if (!title) { toast_('Title required', 'err'); return; }
+    try {
+      await req('work_items', {
+        method: 'POST', prefer: 'return=minimal',
+        body: JSON.stringify({
+          type: document.getElementById('nType').value,
+          title,
+          description: document.getElementById('nDesc').value.trim() || null,
+          priority: document.getElementById('nPriority').value,
+          source: document.getElementById('nSource').value,
+          created_by: document.getElementById('nCreatedBy').value.trim() || 'Tony',
+          status: 'new'
+        })
+      });
+      toast_('✓ Work item created', 'ok');
+      closeAdd();
+      document.getElementById('nTitle').value = '';
+      document.getElementById('nDesc').value = '';
+      await load();
+    } catch(e) { toast_('Failed: ' + e.message, 'err'); }
+  }
+
+  function toast_(msg, type='') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast ${type} show`;
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function esc(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
 </body>
 </html>
