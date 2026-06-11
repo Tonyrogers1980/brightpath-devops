@@ -3,724 +3,375 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BrightPath — Engineering Hub</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>BrightPath DevOps</title>
 <style>
-
   :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --surface2: #1a1a24;
-    --border: #2a2a3a;
-    --accent: #6c63ff;
-    --accent2: #ff6b6b;
-    --accent3: #43e97b;
-    --accent4: #f7971e;
-    --text: #e8e8f0;
-    --text-dim: #7a7a9a;
-    --text-bright: #ffffff;
-    --critical: #ff4757;
-    --high: #ff6b35;
-    --medium: #ffd32a;
-    --low: #2ed573;
-    --mono: 'JetBrains Mono', monospace;
-    --display: 'Syne', sans-serif;
+    --bg: #0f0e17;
+    --surface: #1a1828;
+    --surface2: #221f35;
+    --border: #2e2b45;
+    --accent: #7c6af7;
+    --accent2: #a78bfa;
+    --text: #e8e6f0;
+    --muted: #8b87a8;
+    --hint: #5a5775;
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --info: #60a5fa;
+    --blocked: #fb923c;
+    --radius: 10px;
+    --radius-sm: 6px;
   }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* Header */
+  .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .header-title { font-size: 18px; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .header-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+  .btn { padding: 8px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: opacity 0.15s; }
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-ghost { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+  #connectionStatus { font-size: 12px; padding: 4px 10px; border-radius: 20px; }
+  .connected { background: rgba(74,222,128,0.15); color: var(--success); }
+  .disconnected { background: rgba(248,113,113,0.15); color: var(--danger); }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--mono);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  /* Layout */
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(108,99,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(108,99,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+  /* Setup screen */
+  #setupScreen { max-width: 480px; margin: 80px auto; background: var(--surface); border-radius: var(--radius); padding: 32px; border: 1px solid var(--border); }
+  #setupScreen h2 { font-size: 20px; margin-bottom: 8px; }
+  #setupScreen p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .form-group input { width: 100%; padding: 10px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 14px; }
+  .form-group input:focus { outline: none; border-color: var(--accent); }
 
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,10,15,0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-  }
+  /* Stats bar */
+  .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center; }
+  .stat-value { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
 
-  .logo {
-    font-family: var(--display);
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--text-bright);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  /* Sprint view */
+  .sprint-grid { display: flex; flex-direction: column; gap: 24px; }
+  .sprint-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .sprint-header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
+  .sprint-header:hover { background: var(--surface2); }
+  .sprint-name { font-size: 15px; font-weight: 700; }
+  .sprint-meta { display: flex; align-items: center; gap: 10px; }
+  .sprint-badge { font-size: 11px; padding: 3px 8px; border-radius: 20px; font-weight: 600; }
+  .badge-done { background: rgba(74,222,128,0.15); color: var(--success); }
+  .badge-active { background: rgba(124,106,247,0.2); color: var(--accent2); }
+  .badge-upcoming { background: rgba(96,165,250,0.15); color: var(--info); }
+  .badge-blocked { background: rgba(251,146,60,0.15); color: var(--blocked); }
+  .sprint-toggle { color: var(--muted); font-size: 12px; transition: transform 0.2s; }
+  .sprint-toggle.open { transform: rotate(180deg); }
+  .sprint-items { display: none; }
+  .sprint-items.open { display: block; }
 
-  .logo-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-    animation: pulse 2s infinite;
-  }
+  /* Work item */
+  .work-item { padding: 14px 20px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 28px 80px 80px 1fr auto; gap: 12px; align-items: center; }
+  .work-item:last-child { border-bottom: none; }
+  .work-item:hover { background: rgba(124,106,247,0.04); }
+  .item-order { font-size: 12px; color: var(--hint); font-family: monospace; text-align: center; }
+  .item-type { font-size: 11px; padding: 2px 8px; border-radius: 20px; text-align: center; font-weight: 600; white-space: nowrap; }
+  .type-bug { background: rgba(248,113,113,0.15); color: var(--danger); }
+  .type-story { background: rgba(124,106,247,0.15); color: var(--accent2); }
+  .type-feature { background: rgba(96,165,250,0.15); color: var(--info); }
+  .item-status { font-size: 11px; padding: 2px 8px; border-radius: 20px; text-align: center; font-weight: 600; white-space: nowrap; }
+  .status-done { background: rgba(74,222,128,0.12); color: var(--success); }
+  .status-in_progress { background: rgba(124,106,247,0.2); color: var(--accent2); }
+  .status-assigned_to_you { background: rgba(251,191,36,0.15); color: var(--warning); }
+  .status-pending_testing { background: rgba(96,165,250,0.15); color: var(--info); }
+  .status-blocked { background: rgba(251,146,60,0.15); color: var(--blocked); }
+  .status-new { background: rgba(139,135,168,0.15); color: var(--muted); }
+  .status-screening { background: rgba(139,135,168,0.15); color: var(--muted); }
+  .item-title { font-size: 13px; color: var(--text); line-height: 1.4; }
+  .item-title .item-notes { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .item-versions { text-align: right; }
+  .version-tag { font-size: 10px; font-family: monospace; color: var(--hint); display: block; }
+  .version-tag.deployed { color: var(--success); }
 
-  @keyframes pulse {
-    0%,100%{opacity:1;transform:scale(1)}
-    50%{opacity:0.6;transform:scale(0.8)}
-  }
+  /* Priority dot */
+  .priority-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 6px; flex-shrink: 0; }
+  .priority-critical { background: var(--danger); }
+  .priority-high { background: var(--warning); }
+  .priority-medium { background: var(--accent); }
+  .priority-low { background: var(--hint); }
 
-  .header-right { display: flex; align-items: center; gap: 12px; }
+  /* Filters */
+  .filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); font-size: 12px; cursor: pointer; transition: all 0.15s; }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(124,106,247,0.1); }
+  .filter-label { font-size: 12px; color: var(--hint); }
 
-  .env-badge {
-    font-size: 10px; font-weight: 600; letter-spacing: 2px;
-    text-transform: uppercase; padding: 4px 10px; border-radius: 4px;
-    background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3);
-    color: var(--accent);
-  }
-
-  .btn {
-    background: transparent; border: 1px solid var(--border);
-    color: var(--text-dim); padding: 6px 14px; border-radius: 6px;
-    font-family: var(--mono); font-size: 11px; cursor: pointer;
-    transition: all 0.2s; display: flex; align-items: center; gap: 6px;
-  }
-  .btn:hover { border-color: var(--accent); color: var(--accent); }
-  .btn.accent { background: var(--accent); border-color: var(--accent); color: white; }
-  .btn.accent:hover { opacity: 0.85; }
-
-  .spin { animation: spin 1s linear infinite; display: inline-block; }
+  /* Loading */
+  .loading { text-align: center; padding: 60px; color: var(--muted); }
+  .spinner { width: 32px; height: 32px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Config */
-  .overlay {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .overlay.hidden { display: none; }
-
-  .modal {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 40px; width: 480px; max-width: 90vw;
-  }
-  .modal h2 { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px; }
-  .modal p { font-size: 12px; color: var(--text-dim); margin-bottom: 28px; line-height: 1.6; }
-
-  .field { margin-bottom: 16px; }
-  .field label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
-  .field input, .field select, .field textarea {
-    width: 100%; background: var(--bg); border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 14px; font-family: var(--mono);
-    font-size: 12px; color: var(--text); outline: none; transition: border-color 0.2s;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
-  .field textarea { resize: vertical; min-height: 80px; }
-
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-  .btn-full { width: 100%; padding: 12px; font-size: 13px; font-weight: 600; margin-top: 8px; border-radius: 8px; cursor: pointer; font-family: var(--mono); }
-  .btn-primary { background: var(--accent); border: none; color: white; }
-  .btn-primary:hover { opacity: 0.85; }
-  .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
-  .btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
-  .modal-actions { display: flex; gap: 12px; margin-top: 8px; }
-
-  /* Main */
-  .main { position: relative; z-index: 1; padding: 28px 32px; max-width: 1600px; margin: 0 auto; }
-
-  /* Stats */
-  .stats { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin-bottom: 28px; }
-
-  .stat {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 14px 16px; cursor: pointer; transition: all 0.2s;
-  }
-  .stat:hover, .stat.active { border-color: var(--accent); background: rgba(108,99,255,0.06); }
-  .stat-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
-  .stat-val { font-family: var(--display); font-size: 26px; font-weight: 800; color: var(--text-bright); line-height: 1; }
-  .stat.s-new .stat-val { color: var(--text-dim); }
-  .stat.s-screening .stat-val { color: var(--accent); }
-  .stat.s-assigned .stat-val { color: #a78bfa; }
-  .stat.s-inprogress .stat-val { color: var(--accent4); }
-  .stat.s-blocked .stat-val { color: var(--accent2); }
-  .stat.s-pending .stat-val { color: #38bdf8; }
-  .stat.s-done .stat-val { color: var(--accent3); }
-
-  /* Toolbar */
-  .toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-  .filter-group { display: flex; align-items: center; gap: 6px; }
-  .filter-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
-  .fbtn {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 5px;
-    padding: 5px 10px; font-family: var(--mono); font-size: 11px; color: var(--text-dim);
-    cursor: pointer; transition: all 0.2s;
-  }
-  .fbtn:hover, .fbtn.on { border-color: var(--accent); color: var(--accent); background: rgba(108,99,255,0.08); }
-  .sep { width: 1px; height: 22px; background: var(--border); }
-  .ml-auto { margin-left: auto; }
-
-  /* Table */
-  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-
-  .t-head {
-    display: grid;
-    grid-template-columns: 44px 85px 95px 1fr 150px 110px 110px 90px;
-    padding: 11px 20px; border-bottom: 1px solid var(--border);
-    background: var(--surface2);
-  }
-  .th { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); }
-
-  .t-row {
-    display: grid;
-    grid-template-columns: 44px 85px 95px 1fr 150px 110px 110px 90px;
-    padding: 13px 20px; border-bottom: 1px solid rgba(42,42,58,0.5);
-    align-items: center; cursor: pointer; transition: background 0.15s;
-  }
-  .t-row:last-child { border-bottom: none; }
-  .t-row:hover { background: rgba(108,99,255,0.04); }
-
-  .td { font-size: 12px; color: var(--text); padding-right: 10px; }
-
-  .type-pill {
-    display: inline-block; font-size: 10px; font-weight: 600;
-    letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 7px; border-radius: 4px;
-  }
-  .tp-bug { background: rgba(255,71,87,0.15); color: var(--critical); border: 1px solid rgba(255,71,87,0.25); }
-  .tp-feature { background: rgba(108,99,255,0.15); color: var(--accent); border: 1px solid rgba(108,99,255,0.25); }
-  .tp-feedback { background: rgba(67,233,123,0.1); color: var(--accent3); border: 1px solid rgba(67,233,123,0.25); }
-  .tp-story { background: rgba(247,151,30,0.15); color: var(--accent4); border: 1px solid rgba(247,151,30,0.25); }
-
-  .pdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-  .pd-critical { background: var(--critical); box-shadow: 0 0 6px var(--critical); }
-  .pd-high { background: var(--high); }
-  .pd-medium { background: var(--medium); }
-  .pd-low { background: var(--low); }
-
-  .status-pill {
-    display: inline-block; font-size: 10px; font-weight: 600;
-    letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 20px;
-  }
-  .sp-new { background: rgba(122,122,154,0.15); color: var(--text-dim); }
-  .sp-screening { background: rgba(108,99,255,0.18); color: var(--accent); }
-  .sp-assigned_to_you { background: rgba(167,139,250,0.18); color: #a78bfa; }
-  .sp-in_progress { background: rgba(247,151,30,0.18); color: var(--accent4); }
-  .sp-blocked { background: rgba(255,107,107,0.18); color: var(--accent2); }
-  .sp-pending_testing { background: rgba(56,189,248,0.15); color: #38bdf8; }
-  .sp-done { background: rgba(67,233,123,0.13); color: var(--accent3); }
-  .sp-backlog { background: rgba(42,42,58,0.5); color: #555570; }
-
-  .title-td {
-    font-size: 13px; color: var(--text-bright); font-weight: 500;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 16px;
-  }
-
-  .vtag {
-    font-size: 10px; font-family: var(--mono); padding: 2px 6px;
-    border-radius: 4px; border: 1px solid var(--border); background: var(--surface2); color: var(--text-dim);
-  }
-  .vtag.live { color: var(--accent3); border-color: rgba(67,233,123,0.3); background: rgba(67,233,123,0.07); }
-
-  .edit-btn {
-    background: transparent; border: 1px solid var(--border); border-radius: 4px;
-    padding: 3px 8px; font-family: var(--mono); font-size: 10px;
-    color: var(--text-dim); cursor: pointer; transition: all 0.2s;
-  }
-  .edit-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* Detail panel */
-  .panel {
-    position: fixed; top: 0; right: 0; width: 460px; height: 100vh;
-    background: var(--surface); border-left: 1px solid var(--border);
-    z-index: 150; transform: translateX(100%);
-    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-    overflow-y: auto; padding: 28px;
-  }
-  .panel.open { transform: translateX(0); }
-
-  .panel-close {
-    position: absolute; top: 18px; right: 18px;
-    background: transparent; border: 1px solid var(--border); border-radius: 6px;
-    width: 30px; height: 30px; color: var(--text-dim); cursor: pointer;
-    font-size: 14px; display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-  }
-  .panel-close:hover { border-color: var(--accent2); color: var(--accent2); }
-
-  .panel-title { font-family: var(--display); font-size: 19px; font-weight: 700; color: var(--text-bright); margin: 12px 0 16px; line-height: 1.3; }
-
-  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
-  .meta-item .ml { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 3px; }
-  .meta-item .mv { font-size: 12px; color: var(--text); }
-
-  .section { margin-bottom: 20px; }
-  .section-title {
-    font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--text-dim); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
-  }
-  .section-text { font-size: 13px; color: var(--text); line-height: 1.7; }
-
-  /* Version tracker */
-  .version-strip {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 16px 20px; margin-top: 18px;
-    display: none;
-  }
-  .vs-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text-bright); margin-bottom: 12px; }
-  .vs-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-  .vs-chip {
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 6px; padding: 6px 12px; font-size: 11px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .vs-chip .vn { font-weight: 700; color: var(--accent3); }
-  .vs-chip .vc { color: var(--text-dim); }
-
-  /* Empty / loading */
-  .empty { padding: 56px 20px; text-align: center; color: var(--text-dim); }
-  .empty h3 { font-family: var(--display); font-size: 17px; color: var(--text); margin-bottom: 6px; }
-  .empty p { font-size: 13px; line-height: 1.6; }
-  .loading { padding: 56px 20px; text-align: center; color: var(--text-dim); font-size: 13px; }
-
-  /* Toast */
-  .toast {
-    position: fixed; bottom: 28px; right: 28px;
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 8px; padding: 11px 18px; font-size: 13px; color: var(--text);
-    z-index: 300; transform: translateY(80px); opacity: 0; transition: all 0.3s;
-  }
-  .toast.show { transform: translateY(0); opacity: 1; }
-  .toast.ok { border-color: var(--accent3); color: var(--accent3); }
-  .toast.err { border-color: var(--accent2); color: var(--accent2); }
+  /* Version info bar */
+  .version-bar { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .version-bar-item { font-size: 13px; }
+  .version-bar-item strong { color: var(--accent2); font-family: monospace; }
+  .version-bar-label { color: var(--muted); font-size: 11px; margin-right: 6px; }
 </style>
 </head>
 <body>
 
-<!-- Config overlay -->
-<div class="overlay" id="cfgOverlay">
-  <div class="modal">
-    <h2>⚡ BrightPath Engineering Hub</h2>
-    <p>Connect to your Supabase project. Find these in Supabase → Settings → API.</p>
-    <div class="field"><label>Supabase Project URL</label><input id="cfgUrl" type="text" placeholder="https://xxxxxxxxxxxx.supabase.co" /></div>
-    <div class="field"><label>Supabase Anon Key</label><input id="cfgKey" type="password" placeholder="eyJhbGciOiJIUzI1NiIs..." /></div>
-    <button class="btn-full btn-primary" onclick="saveConfig()">Connect →</button>
-  </div>
-</div>
-
-<!-- Add item overlay -->
-<div class="overlay hidden" id="addOverlay">
-  <div class="modal">
-    <h2>+ New Work Item</h2>
-    <p style="margin-bottom:20px"></p>
-    <div class="field-row">
-      <div class="field"><label>Type</label>
-        <select id="nType">
-          <option value="bug">🐛 Bug</option>
-          <option value="feature">✦ Feature</option>
-          <option value="story">📖 Story</option>
-          <option value="feedback">💬 Feedback</option>
-        </select>
-      </div>
-      <div class="field"><label>Priority</label>
-        <select id="nPriority">
-          <option value="critical">🔴 Critical</option>
-          <option value="high">🟠 High</option>
-          <option value="medium" selected>🟡 Medium</option>
-          <option value="low">🟢 Low</option>
-        </select>
-      </div>
-    </div>
-    <div class="field"><label>Title</label><input id="nTitle" type="text" placeholder="Short descriptive title..." /></div>
-    <div class="field"><label>Description</label><textarea id="nDesc" placeholder="What needs doing? For bugs: steps to reproduce..."></textarea></div>
-    <div class="field-row">
-      <div class="field"><label>Source</label>
-        <select id="nSource">
-          <option value="founder">Founder</option>
-          <option value="user_survey">User Survey</option>
-          <option value="testing">Testing</option>
-          <option value="analytics">Analytics</option>
-        </select>
-      </div>
-      <div class="field"><label>Created By</label><input id="nCreatedBy" type="text" value="Tony" /></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-full btn-secondary" onclick="closeAdd()">Cancel</button>
-      <button class="btn-full btn-primary" onclick="submitAdd()">Create →</button>
-    </div>
-  </div>
-</div>
-
-<!-- Header -->
 <div class="header">
-  <div class="logo"><div class="logo-dot"></div>BrightPath Engineering</div>
-  <div class="header-right">
-    <div class="env-badge">LIVE</div>
-    <button class="btn" onclick="load()"><span id="syncIco">↻</span> Sync</button>
-    <button class="btn" onclick="document.getElementById('cfgOverlay').classList.remove('hidden')">⚙ Config</button>
-    <button class="btn accent" onclick="openAdd()">+ New Item</button>
+  <div>
+    <div class="header-title">✨ BrightPath DevOps</div>
+    <div class="header-sub">Engineering backlog & sprint tracker</div>
+  </div>
+  <div class="header-actions">
+    <span id="connectionStatus" class="disconnected">⚡ Not connected</span>
+    <button class="btn btn-ghost" onclick="loadData()">↻ Refresh</button>
+    <button class="btn btn-ghost" onclick="showSetup()">⚙ Settings</button>
   </div>
 </div>
 
-<!-- Main -->
-<div class="main">
-
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat s-all active" onclick="fStatus('')" id="st-all"><div class="stat-label">Total</div><div class="stat-val" id="c-all">—</div></div>
-    <div class="stat s-new" onclick="fStatus('new')" id="st-new"><div class="stat-label">New</div><div class="stat-val" id="c-new">—</div></div>
-    <div class="stat s-screening" onclick="fStatus('screening')" id="st-screening"><div class="stat-label">Screening</div><div class="stat-val" id="c-screening">—</div></div>
-    <div class="stat s-assigned" onclick="fStatus('assigned_to_you')" id="st-assigned_to_you"><div class="stat-label">Assigned</div><div class="stat-val" id="c-assigned_to_you">—</div></div>
-    <div class="stat s-inprogress" onclick="fStatus('in_progress')" id="st-in_progress"><div class="stat-label">In Progress</div><div class="stat-val" id="c-in_progress">—</div></div>
-    <div class="stat s-blocked" onclick="fStatus('blocked')" id="st-blocked"><div class="stat-label">Blocked</div><div class="stat-val" id="c-blocked">—</div></div>
-    <div class="stat s-pending" onclick="fStatus('pending_testing')" id="st-pending_testing"><div class="stat-label">Testing</div><div class="stat-val" id="c-pending_testing">—</div></div>
-    <div class="stat s-done" onclick="fStatus('done')" id="st-done"><div class="stat-label">Done</div><div class="stat-val" id="c-done">—</div></div>
+<!-- Setup Screen -->
+<div id="setupScreen" style="display:none">
+  <h2>Connect to Supabase</h2>
+  <p>Enter your Supabase credentials to load the BrightPath DevOps backlog.</p>
+  <div class="form-group">
+    <label>Supabase Project URL</label>
+    <input type="text" id="sbUrl" placeholder="https://xxxx.supabase.co" />
   </div>
-
-  <!-- Toolbar -->
-  <div class="toolbar">
-    <div class="filter-group">
-      <span class="filter-label">Type</span>
-      <button class="fbtn on" id="ft-" onclick="fType('')">All</button>
-      <button class="fbtn" id="ft-bug" onclick="fType('bug')">🐛 Bug</button>
-      <button class="fbtn" id="ft-feature" onclick="fType('feature')">✦ Feature</button>
-      <button class="fbtn" id="ft-story" onclick="fType('story')">📖 Story</button>
-      <button class="fbtn" id="ft-feedback" onclick="fType('feedback')">💬 Feedback</button>
-    </div>
-    <div class="sep"></div>
-    <div class="filter-group">
-      <span class="filter-label">Priority</span>
-      <button class="fbtn on" id="fp-" onclick="fPriority('')">All</button>
-      <button class="fbtn" id="fp-critical" onclick="fPriority('critical')">🔴 Critical</button>
-      <button class="fbtn" id="fp-high" onclick="fPriority('high')">🟠 High</button>
-      <button class="fbtn" id="fp-medium" onclick="fPriority('medium')">🟡 Medium</button>
-      <button class="fbtn" id="fp-low" onclick="fPriority('low')">🟢 Low</button>
-    </div>
+  <div class="form-group">
+    <label>Supabase Anon Key</label>
+    <input type="password" id="sbKey" placeholder="eyJ..." />
   </div>
-
-  <!-- Table -->
-  <div class="table-wrap">
-    <div class="t-head">
-      <div class="th" style="cursor:pointer" onclick="toggleSort()" title="Sort by backlog order">#</div>
-      <div class="th">Type</div>
-      <div class="th">Priority</div>
-      <div class="th">Title</div>
-      <div class="th">Status</div>
-      <div class="th">Assigned Ver</div>
-      <div class="th">Deployed Ver</div>
-      <div class="th">Action</div>
-    </div>
-    <div id="tbody"><div class="loading">Connecting to Supabase…</div></div>
-  </div>
-
-  <!-- Version tracker -->
-  <div class="version-strip" id="vStrip">
-    <div class="vs-title">📦 Deployed Versions</div>
-    <div class="vs-chips" id="vChips"></div>
-  </div>
-
+  <button class="btn btn-primary" style="width:100%" onclick="saveCredentials()">Connect & Load</button>
 </div>
 
-<!-- Detail panel -->
-<div class="panel" id="panel">
-  <button class="panel-close" onclick="closePanel()">✕</button>
-  <div id="panelBody"></div>
-</div>
+<!-- Main Dashboard -->
+<div id="dashboard" style="display:none">
+  <div class="container">
 
-<div class="toast" id="toast"></div>
+    <!-- Version bar -->
+    <div class="version-bar" id="versionBar"></div>
+
+    <!-- Stats -->
+    <div class="stats-bar" id="statsBar"></div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <span class="filter-label">Show:</span>
+      <button class="filter-btn active" onclick="setFilter('all', this)">All sprints</button>
+      <button class="filter-btn" onclick="setFilter('active', this)">Active only</button>
+      <button class="filter-btn" onclick="setFilter('open', this)">Open items</button>
+      <button class="filter-btn" onclick="setFilter('blocked', this)">Blocked</button>
+    </div>
+
+    <!-- Sprint blocks -->
+    <div class="sprint-grid" id="sprintGrid">
+      <div class="loading"><div class="spinner"></div>Loading backlog...</div>
+    </div>
+
+  </div>
+</div>
 
 <script>
-  let URL_ = '', KEY_ = '';
-  let items = [], statusF = '', typeF = '', priF = '', activeId = null;
-  let sortByOrder = true;
+let SB_URL = '';
+let SB_KEY = '';
+let allItems = [];
+let currentFilter = 'all';
 
-  function toggleSort() {
-    sortByOrder = !sortByOrder;
-    render();
-  }
+// ── Credentials ──────────────────────────────────────
+function loadCredentials() {
+  SB_URL = localStorage.getItem('bp_devops_url') || '';
+  SB_KEY = localStorage.getItem('bp_devops_key') || '';
+  return SB_URL && SB_KEY;
+}
+function saveCredentials() {
+  SB_URL = document.getElementById('sbUrl').value.trim().replace(/\/$/, '');
+  SB_KEY = document.getElementById('sbKey').value.trim();
+  if(!SB_URL || !SB_KEY) { alert('Please enter both URL and key'); return; }
+  localStorage.setItem('bp_devops_url', SB_URL);
+  localStorage.setItem('bp_devops_key', SB_KEY);
+  document.getElementById('setupScreen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadData();
+}
+function showSetup() {
+  document.getElementById('sbUrl').value = SB_URL;
+  document.getElementById('sbKey').value = SB_KEY;
+  document.getElementById('setupScreen').style.display = 'block';
+  document.getElementById('dashboard').style.display = 'none';
+}
 
-  window.onload = () => {
-    URL_ = localStorage.getItem('bp_sb_url') || '';
-    KEY_ = localStorage.getItem('bp_sb_key') || '';
-    if (URL_ && KEY_) {
-      document.getElementById('cfgOverlay').classList.add('hidden');
-      document.getElementById('cfgUrl').value = URL_;
-      document.getElementById('cfgKey').value = KEY_;
-      load();
-    }
-  };
-
-  function saveConfig() {
-    URL_ = document.getElementById('cfgUrl').value.trim().replace(/\/$/, '');
-    KEY_ = document.getElementById('cfgKey').value.trim();
-    if (!URL_ || !KEY_) { toast_('Enter both URL and key', 'err'); return; }
-    localStorage.setItem('bp_sb_url', URL_);
-    localStorage.setItem('bp_sb_key', KEY_);
-    document.getElementById('cfgOverlay').classList.add('hidden');
-    load();
-  }
-
-  async function req(path, opts = {}) {
-    const res = await fetch(`${URL_}/rest/v1/${path}`, {
-      ...opts,
-      headers: {
-        'apikey': KEY_, 'Authorization': `Bearer ${KEY_}`,
-        'Content-Type': 'application/json',
-        'Prefer': opts.prefer || 'return=representation',
-        ...(opts.headers || {})
-      }
-    });
-    if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
-    const t = await res.text();
-    return t ? JSON.parse(t) : null;
-  }
-
-  async function load() {
-    const ico = document.getElementById('syncIco');
-    ico.classList.add('spin');
-    try {
-      items = await req('work_items?select=*&order=backlog_order.asc.nullslast,created_at.desc') || [];
-      updateStats();
-      render();
-      renderVersions();
-    } catch(e) {
-      document.getElementById('tbody').innerHTML = `<div class="empty"><h3>Connection failed</h3><p>${e.message}</p></div>`;
-    } finally { ico.classList.remove('spin'); }
-  }
-
-  function updateStats() {
-    document.getElementById('c-all').textContent = items.length;
-    ['new','screening','assigned_to_you','in_progress','blocked','pending_testing','done','backlog'].forEach(s => {
-      const el = document.getElementById(`c-${s}`);
-      if (el) el.textContent = items.filter(i => i.status === s).length;
-    });
-  }
-
-  function filtered() {
-    let rows = items.filter(i =>
-      (!statusF || i.status === statusF) &&
-      (!typeF || i.type === typeF) &&
-      (!priF || i.priority === priF)
+// ── Data fetch ────────────────────────────────────────
+async function loadData() {
+  try {
+    const res = await fetch(
+      SB_URL + '/rest/v1/work_items?select=*&order=sprint.asc,backlog_order.asc',
+      { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
     );
-    if (sortByOrder) {
-      rows = [...rows].sort((a, b) => (a.backlog_order ?? 999) - (b.backlog_order ?? 999));
-    }
-    return rows;
-  }
-
-  function sprintLabel(order) {
-    if (!order) return '<span style="color:var(--text-dim);font-size:10px">—</span>';
-    if (order >= 90) return '<span style="color:var(--accent3);font-size:10px">✓</span>';
-    const sprint = order <= 4 ? 'S1' : order <= 7 ? 'S2' : order <= 9 ? 'S3' : 'S4';
-    const col = order <= 4 ? 'var(--critical)' : order <= 7 ? '#a78bfa' : order <= 9 ? 'var(--accent4)' : 'var(--accent3)';
-    return `<span style="font-size:10px;font-weight:700;color:${col};font-family:var(--mono)">${sprint}</span>`;
-  }
-
-  function render() {
-    const rows = filtered();
-    if (!rows.length) {
-      document.getElementById('tbody').innerHTML = `<div class="empty"><h3>No items</h3><p>Adjust filters or add a new work item.</p></div>`;
-      return;
-    }
-    document.getElementById('tbody').innerHTML = rows.map(r => `
-      <div class="t-row" onclick="openPanel('${r.id}')">
-        <div class="td" style="text-align:center">${sprintLabel(r.backlog_order)}</div>
-        <div class="td"><span class="type-pill tp-${r.type}">${r.type}</span></div>
-        <div class="td"><span class="pdot pd-${r.priority}"></span><span style="font-size:11px;text-transform:capitalize">${r.priority}</span></div>
-        <div class="td title-td">${esc(r.title)}${r.source==='user_survey'?'<span style="margin-left:6px;font-size:9px;background:rgba(247,151,30,0.15);color:var(--accent4);border:1px solid rgba(247,151,30,0.25);padding:1px 5px;border-radius:3px;font-weight:600">CUST</span>':''}</div>
-        <div class="td"><span class="status-pill sp-${r.status}">${r.status.replace(/_/g,' ')}</span></div>
-        <div class="td">${r.assigned_version ? `<span class="vtag">${esc(r.assigned_version)}</span>` : '<span style="color:var(--text-dim);font-size:11px">—</span>'}</div>
-        <div class="td">${r.deployed_version ? `<span class="vtag live">✓ ${esc(r.deployed_version)}</span>` : '<span style="color:var(--text-dim);font-size:11px">—</span>'}</div>
-        <div class="td"><button class="edit-btn" onclick="event.stopPropagation();openPanel('${r.id}')">Edit</button></div>
-      </div>
-    `).join('');
-  }
-
-  function renderVersions() {
-    const dep = items.filter(i => i.deployed_version);
-    const strip = document.getElementById('vStrip');
-    if (!dep.length) { strip.style.display = 'none'; return; }
-    strip.style.display = 'block';
-    const map = {};
-    dep.forEach(i => { map[i.deployed_version] = (map[i.deployed_version] || 0) + 1; });
-    document.getElementById('vChips').innerHTML = Object.entries(map)
-      .sort(([a],[b]) => b.localeCompare(a))
-      .map(([v, n]) => `<div class="vs-chip"><span class="vn">${esc(v)}</span><span class="vc">${n} item${n>1?'s':''}</span></div>`)
-      .join('');
-  }
-
-  function fStatus(s) {
-    statusF = s;
-    document.querySelectorAll('.stat').forEach(e => e.classList.remove('active'));
-    const el = document.getElementById(s ? `st-${s}` : 'st-all');
-    if (el) el.classList.add('active');
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    allItems = await res.json();
+    document.getElementById('connectionStatus').textContent = '✓ Connected';
+    document.getElementById('connectionStatus').className = 'connected';
     render();
+  } catch(e) {
+    document.getElementById('connectionStatus').textContent = '✗ Error: ' + e.message;
+    document.getElementById('connectionStatus').className = 'disconnected';
+  }
+}
+
+// ── Render ────────────────────────────────────────────
+function render() {
+  renderVersionBar();
+  renderStats();
+  renderSprints();
+}
+
+function renderVersionBar() {
+  const deployed = allItems
+    .filter(i => i.deployed_version && i.status === 'done')
+    .map(i => i.deployed_version)
+    .sort()
+    .pop() || '—';
+  const inProgress = allItems.filter(i => i.status === 'in_progress');
+  const pending = allItems.filter(i => i.status === 'pending_testing');
+  document.getElementById('versionBar').innerHTML = `
+    <div class="version-bar-item"><span class="version-bar-label">LATEST DEPLOYED</span><strong>${deployed}</strong></div>
+    <div class="version-bar-item"><span class="version-bar-label">IN PROGRESS</span><strong>${inProgress.length ? inProgress.map(i=>i.assigned_version||'—').join(', ') : '—'}</strong></div>
+    <div class="version-bar-item"><span class="version-bar-label">PENDING TEST</span><strong style="color:var(--info)">${pending.length} item${pending.length!==1?'s':''}</strong></div>
+    <div class="version-bar-item"><span class="version-bar-label">BLOCKED</span><strong style="color:var(--blocked)">${allItems.filter(i=>i.status==='blocked').length} item${allItems.filter(i=>i.status==='blocked').length!==1?'s':''}</strong></div>
+  `;
+}
+
+function renderStats() {
+  const total = allItems.length;
+  const done = allItems.filter(i => i.status === 'done').length;
+  const open = allItems.filter(i => i.status !== 'done').length;
+  const inFlight = allItems.filter(i => ['in_progress','assigned_to_you','pending_testing'].includes(i.status)).length;
+  const blocked = allItems.filter(i => i.status === 'blocked').length;
+  const bugs = allItems.filter(i => i.type === 'bug' && i.status !== 'done').length;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-card"><div class="stat-value">${done}</div><div class="stat-label">Completed</div></div>
+    <div class="stat-card"><div class="stat-value">${open}</div><div class="stat-label">Open</div></div>
+    <div class="stat-card"><div class="stat-value">${inFlight}</div><div class="stat-label">In flight</div></div>
+    <div class="stat-card"><div class="stat-value" style="-webkit-text-fill-color:var(--blocked)">${blocked}</div><div class="stat-label">Blocked</div></div>
+    <div class="stat-card"><div class="stat-value" style="-webkit-text-fill-color:var(--danger)">${bugs}</div><div class="stat-label">Open bugs</div></div>
+    <div class="stat-card"><div class="stat-value">${Math.round(done/total*100)}%</div><div class="stat-label">Complete</div></div>
+  `;
+}
+
+function renderSprints() {
+  let items = [...allItems];
+
+  // Filter
+  if(currentFilter === 'active') items = items.filter(i => i.sprint && !allSprintDone(i.sprint));
+  if(currentFilter === 'open') items = items.filter(i => i.status !== 'done');
+  if(currentFilter === 'blocked') items = items.filter(i => i.status === 'blocked');
+
+  // Group by sprint
+  const sprints = {};
+  const noSprint = [];
+  items.forEach(item => {
+    if(!item.sprint) { noSprint.push(item); return; }
+    if(!sprints[item.sprint]) sprints[item.sprint] = [];
+    sprints[item.sprint].push(item);
+  });
+
+  const sprintKeys = Object.keys(sprints).sort();
+  const grid = document.getElementById('sprintGrid');
+
+  if(!sprintKeys.length && !noSprint.length) {
+    grid.innerHTML = '<div class="loading">No items match this filter.</div>';
+    return;
   }
 
-  function fType(t) {
-    typeF = t;
-    document.querySelectorAll('[id^="ft-"]').forEach(e => e.classList.remove('on'));
-    document.getElementById(`ft-${t}`).classList.add('on');
-    render();
-  }
+  grid.innerHTML = sprintKeys.map(sprint => {
+    const sprintItems = sprints[sprint];
+    const isDone = sprintItems.every(i => i.status === 'done');
+    const isBlocked = sprintItems.some(i => i.status === 'blocked') && sprintItems.every(i => ['blocked','done'].includes(i.status));
+    const isActive = sprintItems.some(i => ['in_progress','assigned_to_you','pending_testing'].includes(i.status));
+    const badgeClass = isDone ? 'badge-done' : isBlocked ? 'badge-blocked' : isActive ? 'badge-active' : 'badge-upcoming';
+    const badgeText = isDone ? '✓ Done' : isBlocked ? '⚠ Blocked' : isActive ? '● Active' : '○ Upcoming';
+    const doneCount = sprintItems.filter(i => i.status === 'done').length;
+    const startOpen = !isDone;
 
-  function fPriority(p) {
-    priF = p;
-    document.querySelectorAll('[id^="fp-"]').forEach(e => e.classList.remove('on'));
-    document.getElementById(`fp-${p}`).classList.add('on');
-    render();
-  }
-
-  function openPanel(id) {
-    activeId = id;
-    const r = items.find(i => i.id === id);
-    if (!r) return;
-    const isCustomer = r.source === 'user_survey' && r.customer_email;
-    document.getElementById('panelBody').innerHTML = `
-      <div><span class="type-pill tp-${r.type}">${r.type}</span>${isCustomer ? `<span style="margin-left:8px;font-size:10px;background:rgba(247,151,30,0.15);color:var(--accent4);border:1px solid rgba(247,151,30,0.3);padding:2px 8px;border-radius:4px;font-weight:600">CUSTOMER</span>` : ''}</div>
-      <div class="panel-title">${esc(r.title)}</div>
-      <div class="meta-grid">
-        <div class="meta-item"><div class="ml">Priority</div><div class="mv"><span class="pdot pd-${r.priority}"></span>${r.priority}</div></div>
-        <div class="meta-item"><div class="ml">Source</div><div class="mv">${r.source}</div></div>
-        <div class="meta-item"><div class="ml">Created By</div><div class="mv">${esc(r.created_by)}</div></div>
-        <div class="meta-item"><div class="ml">Created</div><div class="mv">${new Date(r.created_at).toLocaleDateString('en-GB')}</div></div>
-      </div>
-
-      ${isCustomer ? `
-      <div class="section" style="border:1px solid rgba(247,151,30,0.2);border-radius:8px;padding:14px;background:rgba(247,151,30,0.04);margin-bottom:16px">
-        <div class="section-title" style="color:var(--accent4)">Customer Information</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-          <div><div class="ml" style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px">Name</div><div style="font-size:12px">${esc(r.customer_name||'—')}</div></div>
-          <div><div class="ml" style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px">Child</div><div style="font-size:12px">${esc(r.customer_child_name||'—')}</div></div>
+    return `<div class="sprint-block">
+      <div class="sprint-header" onclick="toggleSprint(this)">
+        <div class="sprint-name">${sprint}</div>
+        <div class="sprint-meta">
+          <span style="font-size:12px;color:var(--muted)">${doneCount}/${sprintItems.length}</span>
+          <span class="sprint-badge ${badgeClass}">${badgeText}</span>
+          <span class="sprint-toggle ${startOpen?'open':''}">▼</span>
         </div>
-        <div style="margin-bottom:10px"><div class="ml" style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px">Email</div>
-          <div style="font-size:12px;display:flex;align-items:center;gap:8px">
-            ${esc(r.customer_email)}
-            <a href="mailto:${esc(r.customer_email)}?subject=Re: Your BrightPath feedback — ${esc(r.title)}" style="font-size:10px;color:var(--accent);border:1px solid rgba(108,99,255,0.3);padding:2px 8px;border-radius:4px;text-decoration:none">✉ Email</a>
-          </div>
+      </div>
+      <div class="sprint-items ${startOpen?'open':''}">
+        ${sprintItems.map(renderItem).join('')}
+      </div>
+    </div>`;
+  }).join('') + (noSprint.length ? `
+    <div class="sprint-block">
+      <div class="sprint-header" onclick="toggleSprint(this)">
+        <div class="sprint-name" style="color:var(--muted)">Unassigned</div>
+        <div class="sprint-meta">
+          <span class="sprint-badge badge-upcoming">⚠ No sprint</span>
+          <span class="sprint-toggle open">▼</span>
         </div>
-        <div>
-          <div class="ml" style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px">Screening Status</div>
-          <select id="pScreeningStatus" style="width:100%;background:var(--bg);border:1px solid rgba(247,151,30,0.3);border-radius:8px;padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:8px">
-            ${['not_required','pending','contacted','resolved','abandoned'].map(s =>
-              `<option value="${s}" ${(r.screening_status||'not_required')===s?'selected':''}>${s.replace(/_/g,' ')}</option>`
-            ).join('')}
-          </select>
-          <textarea id="pScreeningNotes" placeholder="Screening notes — what's missing? What did you ask the customer?" style="width:100%;background:var(--bg);border:1px solid rgba(247,151,30,0.2);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;resize:vertical;min-height:60px">${esc(r.screening_notes||'')}</textarea>
-        </div>
-      </div>` : ''}
-
-      ${r.description ? `<div class="section"><div class="section-title">Description</div><div class="section-text">${esc(r.description)}</div></div>` : ''}
-      <div class="section">
-        <div class="section-title">Status</div>
-        <select id="pStatus" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:10px">
-          ${['new','screening','assigned_to_you','in_progress','blocked','pending_testing','done','backlog'].map(s =>
-            `<option value="${s}" ${r.status===s?'selected':''}>${s.replace(/_/g,' ')}</option>`
-          ).join('')}
-        </select>
       </div>
-      <div class="section">
-        <div class="section-title">Version Tracking</div>
-        <input id="pAssigned" type="text" placeholder="Assigned version e.g. v1.1.0" value="${esc(r.assigned_version||'')}" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:10px" />
-        <input id="pDeployed" type="text" placeholder="Deployed version e.g. v1.1.0 (once live)" value="${esc(r.deployed_version||'')}" style="width:100%;background:var(--bg);border:1px solid rgba(67,233,123,0.2);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;margin-bottom:10px" />
-      </div>
-      <div class="section">
-        <div class="section-title">Notes</div>
-        <textarea id="pNotes" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;resize:vertical;min-height:90px">${esc(r.notes||'')}</textarea>
-      </div>
-      <button class="btn-full btn-primary" style="border-radius:8px;padding:12px;font-size:13px;font-weight:600;cursor:pointer" onclick="savePanel()">Save Changes</button>
-    `;
-    document.getElementById('panel').classList.add('open');
-  }
+      <div class="sprint-items open">${noSprint.map(renderItem).join('')}</div>
+    </div>` : '');
+}
 
-  function closePanel() {
-    document.getElementById('panel').classList.remove('open');
-    activeId = null;
-  }
+function allSprintDone(sprint) {
+  return allItems.filter(i => i.sprint === sprint).every(i => i.status === 'done');
+}
 
-  async function savePanel() {
-    if (!activeId) return;
-    const r = items.find(i => i.id === activeId);
-    const payload = {
-      status: document.getElementById('pStatus').value,
-      notes: document.getElementById('pNotes').value,
-      assigned_version: document.getElementById('pAssigned').value.trim() || null,
-      deployed_version: document.getElementById('pDeployed').value.trim() || null,
-      updated_at: new Date().toISOString()
-    };
-    // Include screening fields if this is a customer item
-    if (r && r.source === 'user_survey') {
-      const ss = document.getElementById('pScreeningStatus');
-      const sn = document.getElementById('pScreeningNotes');
-      if (ss) payload.screening_status = ss.value;
-      if (sn) payload.screening_notes = sn.value;
-    }
-    try {
-      await req(`work_items?id=eq.${activeId}`, {
-        method: 'PATCH', prefer: 'return=minimal',
-        body: JSON.stringify(payload)
-      });
-      toast_('✓ Saved', 'ok');
-      closePanel();
-      await load();
-    } catch(e) { toast_('Save failed: ' + e.message, 'err'); }
-  }
+function renderItem(item) {
+  const typeClass = 'type-' + item.type;
+  const statusClass = 'status-' + item.status;
+  const priorityClass = 'priority-' + (item.priority || 'low');
+  const statusLabel = item.status.replace(/_/g, ' ');
+  const assignedV = item.assigned_version ? `<span class="version-tag">assigned ${item.assigned_version}</span>` : '';
+  const deployedV = item.deployed_version ? `<span class="version-tag deployed">deployed ${item.deployed_version}</span>` : '';
+  const notes = item.notes ? `<div class="item-notes">${item.notes.substring(0, 120)}${item.notes.length > 120 ? '…' : ''}</div>` : '';
 
-  function openAdd() { document.getElementById('addOverlay').classList.remove('hidden'); }
-  function closeAdd() { document.getElementById('addOverlay').classList.add('hidden'); }
+  return `<div class="work-item">
+    <div class="item-order">${item.backlog_order ?? '—'}</div>
+    <div class="item-type ${typeClass}">${item.type}</div>
+    <div class="item-status ${statusClass}">${statusLabel}</div>
+    <div class="item-title">
+      <span class="priority-dot ${priorityClass}"></span>${item.title}
+      ${notes}
+    </div>
+    <div class="item-versions">${assignedV}${deployedV}</div>
+  </div>`;
+}
 
-  async function submitAdd() {
-    const title = document.getElementById('nTitle').value.trim();
-    if (!title) { toast_('Title required', 'err'); return; }
-    try {
-      await req('work_items', {
-        method: 'POST', prefer: 'return=minimal',
-        body: JSON.stringify({
-          type: document.getElementById('nType').value,
-          title,
-          description: document.getElementById('nDesc').value.trim() || null,
-          priority: document.getElementById('nPriority').value,
-          source: document.getElementById('nSource').value,
-          created_by: document.getElementById('nCreatedBy').value.trim() || 'Tony',
-          status: 'new'
-        })
-      });
-      toast_('✓ Work item created', 'ok');
-      closeAdd();
-      document.getElementById('nTitle').value = '';
-      document.getElementById('nDesc').value = '';
-      await load();
-    } catch(e) { toast_('Failed: ' + e.message, 'err'); }
-  }
+function toggleSprint(header) {
+  const items = header.nextElementSibling;
+  const toggle = header.querySelector('.sprint-toggle');
+  items.classList.toggle('open');
+  toggle.classList.toggle('open');
+}
 
-  function toast_(msg, type='') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = `toast ${type} show`;
-    setTimeout(() => t.classList.remove('show'), 3000);
-  }
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSprints();
+}
 
-  function esc(s) {
-    if (!s) return '';
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
+// ── Init ──────────────────────────────────────────────
+if(loadCredentials()) {
+  document.getElementById('dashboard').style.display = 'block';
+  loadData();
+} else {
+  document.getElementById('setupScreen').style.display = 'block';
+}
 </script>
 </body>
 </html>
