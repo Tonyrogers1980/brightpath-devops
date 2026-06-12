@@ -282,7 +282,11 @@ function renderSprints() {
     sprints[item.sprint].push(item);
   });
 
-  const sprintKeys = Object.keys(sprints).sort();
+  const sprintKeys = Object.keys(sprints).sort((a, b) => {
+    const numA = parseFloat((a.match(/Sprint\s+([\d.]+)/) || [])[1] || 0);
+    const numB = parseFloat((b.match(/Sprint\s+([\d.]+)/) || [])[1] || 0);
+    return numA - numB;
+  });
   const grid = document.getElementById('sprintGrid');
 
   if(!sprintKeys.length && !noSprint.length) {
