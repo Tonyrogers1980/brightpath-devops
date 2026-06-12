@@ -145,8 +145,9 @@
     <input type="text" id="sbUrl" placeholder="https://xxxx.supabase.co" />
   </div>
   <div class="form-group">
-    <label>Supabase Anon Key</label>
+    <label>Supabase Service Role Key</label>
     <input type="password" id="sbKey" placeholder="eyJ..." />
+    <p style="font-size:11px;color:var(--muted);margin-top:6px">⚠ Use the <strong>service_role</strong> key, not the anon key. Find it in Supabase → Settings → API → service_role secret. The work_items and project_artifacts tables are now restricted to service-role access only — the anon key will not work here.</p>
   </div>
   <button class="btn btn-primary" style="width:100%" onclick="saveCredentials()">Connect & Load</button>
 </div>
